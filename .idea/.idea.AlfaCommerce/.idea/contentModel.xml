@@ -199,6 +199,7 @@
         <e p="Controllers" t="Include">
           <e p="CategoriesController.cs" t="Include" />
           <e p="ColorsController.cs" t="Include" />
+          <e p="ProductsController.cs" t="Include" />
           <e p="WeatherForecastController.cs" t="Include" />
         </e>
         <e p="Data" t="Include">
@@ -214,6 +215,7 @@
           <e p="Product.cs" t="Include" />
           <e p="ProductCategory.cs" t="Include" />
           <e p="ProductPhoto.cs" t="Include" />
+          <e p="StoreProduct.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">

@@ -23,7 +23,6 @@ namespace AlfaCommerce.Models
 
         public virtual Category Parent { get; set; }
         public virtual ICollection<Category> InverseParent { get; set; }
-        [ForeignKey("ProductCategories")]
         public virtual ICollection<ProductCategory> ProductsInCategory { get; set; }
     }
 }
