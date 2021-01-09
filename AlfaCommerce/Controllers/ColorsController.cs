@@ -10,36 +10,34 @@ namespace AlfaCommerce.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CategoriesController : Controller
+    public class ColorsController : Controller
     {
         private readonly StoreContext _context;
 
-        public CategoriesController(StoreContext context)
+        public ColorsController(StoreContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Category>> Index()
+        public async Task<IEnumerable<Color>> Index()
         {
-            return await _context.Categories
+            return await _context.Colors
                 .AsNoTracking()
-                //.Include(c => c.ProductCategories)
-                //.ThenInclude(p => p.Product)
                 .ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<Category> Details(int id)
+        public async Task<Color> Details(int id)
         {
-            return await _context.Categories
+            return await _context.Colors
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> Store(
-            [Bind("parent_id,name")] Category category)
+            [Bind("name")] Color color)
         {
             if (!ModelState.IsValid)
             {
@@ -48,7 +46,7 @@ namespace AlfaCommerce.Controllers
 
             try
             {
-                await _context.AddAsync(category);
+                await _context.AddAsync(color);
                 await _context.SaveChangesAsync();
             }
             catch (DbException)
@@ -60,11 +58,11 @@ namespace AlfaCommerce.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Edit(Category category)
+        public async Task<IActionResult> Edit(Color color)
         {
             try
             {
-                _context.Update(category);
+                _context.Update(color);
                 await _context.SaveChangesAsync();
             }
             catch (DbException)
@@ -80,11 +78,11 @@ namespace AlfaCommerce.Controllers
         {
             try
             {
-                var category = await _context.Categories
+                var color = await _context.Colors
                     .AsNoTracking()
                     .FirstOrDefaultAsync(c => c.Id == id);
 
-                _context.Remove(category);
+                _context.Remove(color);
                 await _context.SaveChangesAsync();
             }
             catch (DbException)

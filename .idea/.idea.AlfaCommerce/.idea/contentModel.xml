@@ -198,14 +198,15 @@
         </e>
         <e p="Controllers" t="Include">
           <e p="CategoriesController.cs" t="Include" />
+          <e p="ColorsController.cs" t="Include" />
           <e p="WeatherForecastController.cs" t="Include" />
         </e>
         <e p="Data" t="Include">
           <e p="Migrations" t="Include">
             <e p="20201221032653_InitialDatabase.cs" t="Include" />
             <e p="20201221032653_InitialDatabase.Designer.cs" t="Include" />
-            <e p="StoreContext.cs" t="Include" />
           </e>
+          <e p="StoreContext.cs" t="Include" />
         </e>
         <e p="Models" t="Include">
           <e p="Category.cs" t="Include" />

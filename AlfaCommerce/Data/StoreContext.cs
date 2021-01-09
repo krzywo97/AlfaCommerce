@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace AlfaCommerce.Data.Migrations
+namespace AlfaCommerce.Data
 {
     public partial class StoreContext : DbContext
     {
