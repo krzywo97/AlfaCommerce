@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace AlfaCommerce.Controllers
         {
             _context = context;
         }
-        
+
         [HttpGet]
         public async Task<IEnumerable<Category>> Index()
         {
@@ -42,6 +43,11 @@ namespace AlfaCommerce.Controllers
         public async Task<IActionResult> Store(
             [Bind("parent_id,name")] Category category)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             try
             {
                 await _context.AddAsync(category);
@@ -55,22 +61,40 @@ namespace AlfaCommerce.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}")]
-        public async void Edit(int id, Category category)
+        [HttpPut]
+        public async Task<IActionResult> Edit(Category category)
         {
-            _context.Update(category);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Update(category);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbException)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
 
-        [HttpDelete("id")]
-        public async void Delete(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var category = await _context.Categories
-                .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Id == id);
+            try
+            {
+                var category = await _context.Categories
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(c => c.Id == id);
 
-            _context.Remove(category);
-            await _context.SaveChangesAsync();
+                _context.Remove(category);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbException)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
     }
 }

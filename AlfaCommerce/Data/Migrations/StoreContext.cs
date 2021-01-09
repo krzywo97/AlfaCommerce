@@ -112,7 +112,7 @@ namespace AlfaCommerce.Data.Migrations
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
                 entity.HasOne(d => d.Category)
-                    .WithMany(p => p.ProductCategories)
+                    .WithMany(p => p.ProductsInCategory)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("product_categories_categories_id_fk");
