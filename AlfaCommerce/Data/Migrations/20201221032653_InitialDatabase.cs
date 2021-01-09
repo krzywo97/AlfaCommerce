@@ -16,7 +16,7 @@ namespace AlfaCommerce.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy",
                             NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     parent_id = table.Column<int>(type: "integer", nullable: true),
-                    name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true)
+                    name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
