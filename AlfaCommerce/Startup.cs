@@ -26,7 +26,7 @@ namespace AlfaCommerce
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<AlfaCommerceContext>(options =>
+            services.AddDbContext<StoreContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("AlfaCommerceConnection")));
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });

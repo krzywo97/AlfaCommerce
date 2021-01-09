@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AlfaCommerce.Data.Migrations
 {
-    [DbContext(typeof(AlfaCommerceContext))]
+    [DbContext(typeof(StoreContext))]
     [Migration("20201221032653_InitialDatabase")]
     partial class InitialDatabase
     {

@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlfaCommerce.Data.Migrations
 {
-    public partial class AlfaCommerceContext : DbContext
+    public partial class StoreContext : DbContext
     {
-        public AlfaCommerceContext()
+        public StoreContext()
         {
         }
 
-        public AlfaCommerceContext(DbContextOptions<AlfaCommerceContext> options)
+        public StoreContext(DbContextOptions<StoreContext> options)
             : base(options)
         {
         }
