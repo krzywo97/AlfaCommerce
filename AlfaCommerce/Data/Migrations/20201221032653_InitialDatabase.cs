@@ -49,7 +49,7 @@ namespace AlfaCommerce.Data.Migrations
                             NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     price = table.Column<double>(type: "double precision", nullable: false),
-                    color = table.Column<int>(type: "integer", nullable: false),
+                    colorId = table.Column<int>(type: "integer", nullable: false),
                     weight = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -57,7 +57,7 @@ namespace AlfaCommerce.Data.Migrations
                     table.PrimaryKey("PK_products", x => x.id);
                     table.ForeignKey(
                         name: "products_colors_id_fk",
-                        column: x => x.color,
+                        column: x => x.colorId,
                         principalTable: "colors",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -139,7 +139,7 @@ namespace AlfaCommerce.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_products_color",
                 table: "products",
-                column: "color");
+                column: "colorId");
 
             migrationBuilder.CreateIndex(
                 name: "products_id_uindex",

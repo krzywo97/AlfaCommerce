@@ -16,10 +16,10 @@ namespace AlfaCommerce.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
-        public int Color { get; set; }
+        public int ColorId { get; set; }
         public int Weight { get; set; }
 
-        public virtual Color ColorNavigation { get; set; }
+        public virtual Color Color { get; set; }
         public virtual ICollection<ProductCategory> ProductCategories { get; set; }
         public virtual ICollection<ProductPhoto> ProductPhotos { get; set; }
     }

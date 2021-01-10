@@ -29,6 +29,7 @@ namespace AlfaCommerce.Data.Migrations
                         .UseIdentityByDefaultColumn();
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("name");
@@ -77,9 +78,9 @@ namespace AlfaCommerce.Data.Migrations
                         .HasColumnName("id")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<int>("Color")
+                    b.Property<int>("ColorId")
                         .HasColumnType("integer")
-                        .HasColumnName("color");
+                        .HasColumnName("colorId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -97,7 +98,7 @@ namespace AlfaCommerce.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Color");
+                    b.HasIndex("ColorId");
 
                     b.HasIndex(new[] { "Id" }, "products_id_uindex")
                         .IsUnique();
@@ -145,13 +146,13 @@ namespace AlfaCommerce.Data.Migrations
 
             modelBuilder.Entity("AlfaCommerce.Models.Product", b =>
                 {
-                    b.HasOne("AlfaCommerce.Models.Color", "ColorNavigation")
+                    b.HasOne("AlfaCommerce.Models.Color", "Color")
                         .WithMany("Products")
-                        .HasForeignKey("Color")
+                        .HasForeignKey("ColorId")
                         .HasConstraintName("products_colors_id_fk")
                         .IsRequired();
 
-                    b.Navigation("ColorNavigation");
+                    b.Navigation("Color");
                 });
 
             modelBuilder.Entity("AlfaCommerce.Models.ProductPhoto", b =>
