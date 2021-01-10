@@ -76,14 +76,14 @@ namespace AlfaCommerce.Data
             {
                 entity.ToTable("products");
 
-                entity.HasIndex(e => e.Color, "IX_products_color");
+                entity.HasIndex(e => e.ColorId, "IX_products_color");
 
                 entity.HasIndex(e => e.Id, "products_id_uindex")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Color).HasColumnName("color");
+                entity.Property(e => e.ColorId).HasColumnName("colorId");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -94,9 +94,9 @@ namespace AlfaCommerce.Data
 
                 entity.Property(e => e.Weight).HasColumnName("weight");
 
-                entity.HasOne(d => d.ColorNavigation)
+                entity.HasOne(d => d.Color)
                     .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.Color)
+                    .HasForeignKey(d => d.ColorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("products_colors_id_fk");
             });
