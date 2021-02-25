@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq;
 using System.Threading.Tasks;
 using AlfaCommerce.Data;
 using AlfaCommerce.Models;
+using AlfaCommerce.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,21 +23,75 @@ namespace AlfaCommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Category>> Index()
+        public async Task<IEnumerable<CategoryTreeDto>> Index()
         {
-            return await _context.Categories
-                .AsNoTracking()
-                //.Include(c => c.ProductCategories)
-                //.ThenInclude(p => p.Product)
+            var categories = await _context.Categories
+                .Include(c => c.InverseParent)
+                .Where(c => c.ParentId == null)
                 .ToListAsync();
+
+            return categories.Select(c => FillCategoryTree(c).Result);
         }
 
         [HttpGet("{id}")]
-        public async Task<Category> Details(int id)
+        public async Task<CategoryWithProductsDto> Details(int id)
         {
-            return await _context.Categories
+            var category = await _context.Categories
                 .AsNoTracking()
+                .Include(c => c.ProductsInCategory)
+                .ThenInclude(pc => pc.Product)
+                .ThenInclude(p => p.Color)
+                .Include(c => c.ProductsInCategory)
+                .ThenInclude(pc => pc.Product)
+                .ThenInclude(p => p.ProductPhotos)
                 .FirstOrDefaultAsync(c => c.Id == id);
+
+            var products = new List<ProductDto>();
+            foreach (var p in category.ProductsInCategory)
+            {
+                var color = new ColorDto()
+                {
+                    Id = p.Product.Color.Id,
+                    Name = p.Product.Color.Name
+                };
+
+                var photos = new List<ProductPhotoDto>();
+                foreach (var photo in p.Product.ProductPhotos)
+                {
+                    photos.Add(new ProductPhotoDto()
+                    {
+                        Url = photo.Url
+                    });
+                }
+                
+                var categories = new List<CategoryDto>();
+                foreach (var productCategory in p.Product.ProductCategories)
+                {
+                    categories.Add(new CategoryDto()
+                    {
+                        Id = productCategory.Category.Id,
+                        Name = productCategory.Category.Name
+                    });
+                }
+                
+                products.Add(new ProductDto()
+                {
+                    Id = p.Product.Id,
+                    Name = p.Product.Name,
+                    Price = p.Product.Price,
+                    Weight = p.Product.Weight,
+                    Color = color,
+                    Photos = photos,
+                    Categories = categories
+                });
+            }
+
+            return new CategoryWithProductsDto()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Products = products
+            };
         }
 
         [HttpPost]
@@ -94,6 +150,24 @@ namespace AlfaCommerce.Controllers
             }
 
             return Ok();
+        }
+
+        //TODO: rewrite the function in a non-recursive way using stack
+        private async Task<CategoryTreeDto> FillCategoryTree(Category category)
+        {
+            List<CategoryTreeDto> children = new List<CategoryTreeDto>();
+            await _context.Entry(category).Collection(c => c.InverseParent).LoadAsync();
+            foreach (var subcategory in category.InverseParent)
+            {
+                children.Add(FillCategoryTree(subcategory).Result);
+            }
+
+            return new CategoryTreeDto()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Children = children
+            };
         }
     }
 }

@@ -159,6 +159,8 @@
           <e p="Color.cs" t="Include" />
           <e p="DTO" t="Include">
             <e p="CategoryDto.cs" t="Include" />
+            <e p="CategoryTreeDto.cs" t="Include" />
+            <e p="CategoryWithProductsDto.cs" t="Include" />
             <e p="ColorDto.cs" t="Include" />
             <e p="ProductDto.cs" t="Include" />
             <e p="ProductPhotoDto.cs" t="Include" />
