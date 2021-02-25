@@ -157,6 +157,12 @@
         <e p="Models" t="Include">
           <e p="Category.cs" t="Include" />
           <e p="Color.cs" t="Include" />
+          <e p="DTO" t="Include">
+            <e p="CategoryDto.cs" t="Include" />
+            <e p="ColorDto.cs" t="Include" />
+            <e p="ProductDto.cs" t="Include" />
+            <e p="ProductPhotoDto.cs" t="Include" />
+          </e>
           <e p="Product.cs" t="Include" />
           <e p="ProductCategory.cs" t="Include" />
           <e p="ProductPhoto.cs" t="Include" />

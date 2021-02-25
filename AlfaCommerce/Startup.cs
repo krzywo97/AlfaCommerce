@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using AlfaCommerce.Data;
 using AlfaCommerce.Data.Migrations;
 using AlfaCommerce.Models;
