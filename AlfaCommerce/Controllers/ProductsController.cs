@@ -3,13 +3,15 @@ using System.Data.Common;
 using System.Threading.Tasks;
 using AlfaCommerce.Data;
 using AlfaCommerce.Models;
+using AlfaCommerce.Models.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlfaCommerce.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ProductsController : Controller
     {
         private readonly StoreContext _context;
@@ -47,7 +49,7 @@ namespace AlfaCommerce.Controllers
             {
                 await _context.AddAsync(data.Product);
 
-                foreach (string i in data.Images)
+                /*foreach (string i in data.Images)
                 {
                     ProductPhoto photo = new ProductPhoto
                     {
@@ -65,7 +67,7 @@ namespace AlfaCommerce.Controllers
                         Product = data.Product
                     };
                     await _context.AddAsync(productCategory);
-                }
+                }*/
 
                 await _context.SaveChangesAsync();
             }

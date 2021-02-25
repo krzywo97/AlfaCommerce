@@ -9,7 +9,8 @@ using Microsoft.EntityFrameworkCore;
 namespace AlfaCommerce.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ColorsController : Controller
     {
         private readonly StoreContext _context;
