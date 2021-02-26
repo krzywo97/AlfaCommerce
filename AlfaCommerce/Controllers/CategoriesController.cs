@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
@@ -108,7 +109,7 @@ namespace AlfaCommerce.Controllers
                 await _context.AddAsync(category);
                 await _context.SaveChangesAsync();
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return BadRequest();
             }
@@ -124,7 +125,7 @@ namespace AlfaCommerce.Controllers
                 _context.Update(category);
                 await _context.SaveChangesAsync();
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return BadRequest();
             }
@@ -144,7 +145,7 @@ namespace AlfaCommerce.Controllers
                 _context.Remove(category);
                 await _context.SaveChangesAsync();
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return BadRequest();
             }

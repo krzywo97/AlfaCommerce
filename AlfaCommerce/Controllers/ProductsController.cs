@@ -164,7 +164,7 @@ namespace AlfaCommerce.Controllers
 
                 await _context.SaveChangesAsync();
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return BadRequest();
             }
@@ -181,7 +181,7 @@ namespace AlfaCommerce.Controllers
                 _context.Update(product);
                 await _context.SaveChangesAsync();
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return BadRequest();
             }
@@ -200,7 +200,7 @@ namespace AlfaCommerce.Controllers
                 _context.Remove(product);
                 await _context.SaveChangesAsync();
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return BadRequest();
             }
