@@ -83,7 +83,7 @@ namespace AlfaCommerce.Data
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.ColorId).HasColumnName("colorId");
+                entity.Property(e => e.ColorId).HasColumnName("color_id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()

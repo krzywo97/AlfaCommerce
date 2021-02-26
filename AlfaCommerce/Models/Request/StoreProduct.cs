@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace AlfaCommerce.Models
+namespace AlfaCommerce.Models.Request
 {
     public class StoreProduct
     {

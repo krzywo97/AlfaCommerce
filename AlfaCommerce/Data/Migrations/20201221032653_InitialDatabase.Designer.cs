@@ -29,7 +29,6 @@ namespace AlfaCommerce.Data.Migrations
                         .UseIdentityByDefaultColumn();
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("name");
@@ -80,7 +79,7 @@ namespace AlfaCommerce.Data.Migrations
 
                     b.Property<int>("ColorId")
                         .HasColumnType("integer")
-                        .HasColumnName("colorId");
+                        .HasColumnName("color_id");
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -1,15 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq;
 using System.Threading.Tasks;
 using AlfaCommerce.Data;
 using AlfaCommerce.Models;
+using AlfaCommerce.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlfaCommerce.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ColorsController : Controller
     {
         private readonly StoreContext _context;
@@ -20,19 +24,31 @@ namespace AlfaCommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Color>> Index()
+        public async Task<IEnumerable<ColorDto>> Index()
         {
-            return await _context.Colors
+            var colors = await _context.Colors
                 .AsNoTracking()
                 .ToListAsync();
+
+            return colors.Select(c => new ColorDto()
+            {
+                Id = c.Id,
+                Name = c.Name
+            });
         }
 
         [HttpGet("{id}")]
-        public async Task<Color> Details(int id)
+        public async Task<ColorDto> Details(int id)
         {
-            return await _context.Colors
+            var color = await _context.Colors
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id);
+
+            return new ColorDto()
+            {
+                Id = color.Id,
+                Name = color.Name
+            };
         }
         
         [HttpPost]
@@ -49,7 +65,7 @@ namespace AlfaCommerce.Controllers
                 await _context.AddAsync(color);
                 await _context.SaveChangesAsync();
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return BadRequest();
             }
@@ -65,7 +81,7 @@ namespace AlfaCommerce.Controllers
                 _context.Update(color);
                 await _context.SaveChangesAsync();
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return BadRequest();
             }
@@ -85,7 +101,7 @@ namespace AlfaCommerce.Controllers
                 _context.Remove(color);
                 await _context.SaveChangesAsync();
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return BadRequest();
             }
