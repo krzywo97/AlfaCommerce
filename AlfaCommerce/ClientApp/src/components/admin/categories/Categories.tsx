@@ -2,7 +2,6 @@
 import {Category} from "../../../types/categories.interface";
 import {default as api} from '../../../api/categories';
 import {Link} from "react-router-dom";
-import {Table} from "reactstrap";
 
 type State = {
     loading: boolean,
@@ -10,32 +9,13 @@ type State = {
 }
 
 export default class Categories extends React.PureComponent<{}, State> {
-    state = {
+    state: State = {
         loading: true,
         categories: Array<Category>()
     }
 
-    constructor(props: {}) {
-        super(props);
-
-        api.get()
-            .then(response => {
-                this.setState({
-                    loading: false,
-                    categories: response.data
-                })
-            }, () => {
-                this.setState({
-                    loading: false,
-                    ...this.state
-                })
-            })
-            .catch(() => {
-                this.setState({
-                    loading: false,
-                    ...this.state
-                })
-            })
+    componentDidMount() {
+        this.fetchCategories()
     }
 
     render() {
@@ -44,6 +24,7 @@ export default class Categories extends React.PureComponent<{}, State> {
                 <div className='card'>
                     <div className='card-body bg-white'>
                         <h5 className='card-title'>Kategorie</h5>
+                        <button className='btn btn-link float-right' onClick={this.fetchCategories}>Odśwież</button>
                         <table className='table table-striped table-hover'>
                             <thead>
                             <tr className='thead-light'>
@@ -65,5 +46,26 @@ export default class Categories extends React.PureComponent<{}, State> {
                 </div>
             </div>
         )
+    }
+
+    private fetchCategories = (): void => {
+        api.get()
+            .then(response => {
+                this.setState({
+                    categories: response.data,
+                    loading: false
+                })
+            }, () => {
+                this.setState({
+                    ...this.state,
+                    loading: false
+                })
+            })
+            .catch(() => {
+                this.setState({
+                    ...this.state,
+                    loading: false
+                })
+            })
     }
 }
