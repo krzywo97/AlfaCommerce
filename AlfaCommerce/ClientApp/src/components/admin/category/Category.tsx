@@ -8,10 +8,12 @@ export default class Category extends React.PureComponent<Props> {
     constructor(props: Props) {
         super(props);
     }
-    
+
     render() {
         return (
-            <div>Kategoria {this.props.id}</div>
+            <div className='card'>
+                <div className='card-body'>Kategoria {this.props.id}</div>
+            </div>
         );
     }
 }

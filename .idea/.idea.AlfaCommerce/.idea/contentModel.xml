@@ -53,6 +53,7 @@
           <e p="node_modules\acorn" t="IncludeRecursive" />
           <e p="node_modules\aggregate-error" t="IncludeRecursive" />
           <e p="node_modules\ansi-regex" t="IncludeRecursive" />
+          <e p="node_modules\axios" t="IncludeRecursive" />
           <e p="node_modules\bootstrap" t="IncludeRecursive" />
           <e p="node_modules\camelcase" t="IncludeRecursive" />
           <e p="node_modules\chalk" t="IncludeRecursive" />
@@ -173,6 +174,11 @@
           </e>
           <e p="README.md" t="Include" />
           <e p="src" t="Include">
+            <e p="api" t="Include">
+              <e p="api.tsx" t="Include" />
+              <e p="categories" t="Include" />
+              <e p="Categories.tsx" t="Include" />
+            </e>
             <e p="App.test.tsx" t="Include" />
             <e p="App.tsx" t="Include" />
             <e p="components" t="Include">

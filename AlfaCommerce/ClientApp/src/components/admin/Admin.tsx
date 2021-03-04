@@ -14,6 +14,7 @@ export default class Admin extends React.PureComponent {
                     </div>
                     <div className='col'>
                         <Switch>
+                            <Route path='/admin' exact component={Categories}/>
                             <Route path='/admin/categories' exact component={Categories}/>
                             <Route path='/admin/categories/:categoryId' render={(props => {
                                 return <Category id={props.match.params.categoryId}/>
