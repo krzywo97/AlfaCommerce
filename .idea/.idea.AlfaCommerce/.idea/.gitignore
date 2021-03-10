@@ -1,0 +1,6 @@
+﻿# Ignore everything
+*
+
+# Except necessary files
+!indexLayout.xml
+!vcs.xml

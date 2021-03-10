@@ -1,20 +1,20 @@
 ﻿import React from "react";
-import {Category} from "../../../types/categories.interface";
+import {Category} from "../../../api/models";
 import {default as api} from '../../../api/categories';
 import {Link} from "react-router-dom";
 
 type State = {
     loading: boolean,
-    categories: Array<Category>
+    categories: Category[]
 }
 
-export default class Categories extends React.PureComponent<{}, State> {
+export default class CategoriesView extends React.PureComponent<{}, State> {
     state: State = {
         loading: true,
-        categories: Array<Category>()
-    }
+        categories: []
+    };
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.fetchCategories()
     }
 
@@ -24,7 +24,6 @@ export default class Categories extends React.PureComponent<{}, State> {
                 <div className='card'>
                     <div className='card-body bg-white'>
                         <h5 className='card-title'>Kategorie</h5>
-                        <button className='btn btn-link float-right' onClick={this.fetchCategories}>Odśwież</button>
                         <table className='table table-striped table-hover'>
                             <thead>
                             <tr className='thead-light'>
@@ -34,7 +33,7 @@ export default class Categories extends React.PureComponent<{}, State> {
                             </thead>
                             <tbody>
                             {this.state.categories.map(c => (
-                                    <tr>
+                                    <tr key={c.id}>
                                         <td>{c.name}</td>
                                         <td><Link to={`/admin/categories/${c.id}`}>Szczegóły</Link></td>
                                     </tr>
@@ -42,6 +41,15 @@ export default class Categories extends React.PureComponent<{}, State> {
                             )}
                             </tbody>
                         </table>
+                        <div className='row'>
+                            <div className='col'>
+                                <Link to='/admin/categories/new' className='btn btn-outline-primary'>Nowa
+                                    kategoria</Link>
+                                <button className='btn btn-outline-primary ml-2'
+                                        onClick={this.fetchCategories}>Odśwież
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -57,13 +65,11 @@ export default class Categories extends React.PureComponent<{}, State> {
                 })
             }, () => {
                 this.setState({
-                    ...this.state,
                     loading: false
                 })
             })
             .catch(() => {
                 this.setState({
-                    ...this.state,
                     loading: false
                 })
             })

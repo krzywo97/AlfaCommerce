@@ -176,8 +176,8 @@
           <e p="src" t="Include">
             <e p="api" t="Include">
               <e p="api.tsx" t="Include" />
-              <e p="categories" t="Include" />
               <e p="Categories.tsx" t="Include" />
+              <e p="models.tsx" t="Include" />
             </e>
             <e p="App.test.tsx" t="Include" />
             <e p="App.tsx" t="Include" />
@@ -185,10 +185,10 @@
               <e p="Admin" t="Include">
                 <e p="Admin.tsx" t="Include" />
                 <e p="categories" t="Include">
-                  <e p="Categories.tsx" t="Include" />
-                </e>
-                <e p="category" t="Include">
-                  <e p="Category.tsx" t="Include" />
+                  <e p="CategoriesView.tsx" t="Include" />
+                  <e p="CategoryView.css" t="Include" />
+                  <e p="CategoryView.tsx" t="Include" />
+                  <e p="NewCategoryView.tsx" t="Include" />
                 </e>
                 <e p="sidebar" t="Include">
                   <e p="Sidebar.css" t="Include" />
@@ -211,9 +211,6 @@
               <e p="Counter.ts" t="Include" />
               <e p="index.ts" t="Include" />
               <e p="WeatherForecasts.ts" t="Include" />
-            </e>
-            <e p="types" t="Include">
-              <e p="categories.interface.tsx" t="Include" />
             </e>
           </e>
           <e p="tsconfig.json" t="Include" />
