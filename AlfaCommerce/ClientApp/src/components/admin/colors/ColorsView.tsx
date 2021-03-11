@@ -23,7 +23,7 @@ export default class ColorsView extends React.PureComponent<{}, State> {
             <div className='card'>
                 <div className='card-body'>
                     <h5 className='card-title'>Kolory</h5>
-                    <table className='table table-hover table-active'>
+                    <table className='table table-hover table-striped'>
                         <thead>
                         <tr className='thead-light'>
                             <th>Nazwa</th>
