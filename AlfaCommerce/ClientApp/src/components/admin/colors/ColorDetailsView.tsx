@@ -1,7 +1,6 @@
 ﻿import React from "react";
-import {default as api} from '../../../api/categories';
-import {Category} from "../../../api/models";
-import './CategoryView.css'
+import {default as api} from '../../../api/colors';
+import {Color} from "../../../api/models";
 import {Route} from "react-router";
 import {History} from "history";
 
@@ -10,17 +9,16 @@ type Props = {
 }
 
 type State = {
-    category: Category
+    color: Color
     loading: boolean,
     newName: string
 }
 
-export default class CategoryDetailsView extends React.PureComponent<Props, State> {
+export default class ColorDetailsView extends React.PureComponent<Props, State> {
     state: State = {
-        category: {
+        color: {
             id: 0,
-            name: '',
-            products: []
+            name: ''
         },
         loading: true,
         newName: ''
@@ -35,7 +33,7 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
             <div>
                 <div className='card'>
                     <div className='card-body bg-white'>
-                        <h5 className='card-title'>{this.state.category.name}</h5>
+                        <h5 className='card-title'>{this.state.color.name}</h5>
                         <div className='form-group row'>
                             <div className='col-2 col-form-label'>
                                 <label htmlFor='id'>Identyfikator</label>
@@ -55,40 +53,10 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
                             </div>
                         </div>
                         <div className='form-group row'>
-                            <Route render={({history: History}) => (
+                            <Route render={() => (
                                 <div className='d-flex flex-row-reverse col-6'>
                                     <button className='btn btn-primary' onClick={this.saveChanges}>Zapisz</button>
-                                    <button className='btn btn-outline-danger mr-2'
-                                            onClick={() => this.deleteCategory(History)}
-                                            disabled={this.state.loading || this.hasProducts()}>Usuń
-                                        kategorię
-                                    </button>
                                 </div>)}/>
-                        </div>
-                        {this.hasProducts() ? (
-                            <p className='text-danger'>
-                                Nie można usunąć kategorii, ponieważ zawiera ona produkty
-                            </p>
-                        ) : ''}
-                    </div>
-                </div>
-                <div className='card mt-3'>
-                    <div className='card-body'>
-                        <h5 className='card-title'>Produkty w kategorii {
-                            typeof this.state.category.products !== 'undefined' ? '(' + this.state.category.products.length + ')' : ''
-                        }</h5>
-                        <div className='card-deck'>
-                            {typeof this.state.category.products !== 'undefined' ? this.state.category.products.map(p => (
-                                <div key={p.id} className='col p-0'>
-                                    <div className='card'>
-                                        <img src={p.photos[0].url} alt='Zdjęcie produktu'
-                                             className='card-img-top'/>
-                                        <div className='card-body'>
-                                            <h6 className='card-title'>{p.name}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            )) : ''}
                         </div>
                     </div>
                 </div>
@@ -100,7 +68,7 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
         api.details(this.props.id)
             .then(response => {
                 this.setState({
-                    category: response.data,
+                    color: response.data,
                     loading: false,
                     newName: response.data.name
                 })
@@ -126,8 +94,8 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
 
     }
 
-    deleteCategory = (history: History): void => {
-        api.delete(this.state.category.id)
+    deleteColor = (history: History): void => {
+        api.delete(this.state.color.id)
             .then(() => {
                 history.push('/admin/categories')
             }, () => {
@@ -136,7 +104,4 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
 
         })
     }
-
-    hasProducts = (): boolean => typeof this.state.category.products !== 'undefined' &&
-        this.state.category.products.length > 0
 }

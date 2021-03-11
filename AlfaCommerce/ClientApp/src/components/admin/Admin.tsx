@@ -5,6 +5,8 @@ import CategoriesView from "./categories/CategoriesView";
 import CategoryDetailsView from "./categories/CategoryDetailsView";
 import NewCategoryView from "./categories/NewCategoryView";
 import ColorsView from "./colors/ColorsView";
+import NewColorView from "./colors/NewCategoryView";
+import ColorDetailsView from "./colors/ColorDetailsView";
 
 export default class Admin extends React.PureComponent {
     public render() {
@@ -24,6 +26,10 @@ export default class Admin extends React.PureComponent {
                             })}/>
 
                             <Route path='/admin/colors' exact component={ColorsView}/>
+                            <Route path='/admin/colors/new' exact component={NewColorView}/>
+                            <Route path='/admin/colors/:colorId' render={(props) => (
+                                <ColorDetailsView id={props.match.params.colorId}/>
+                            )}/>
                         </Switch>
                     </div>
                 </div>
