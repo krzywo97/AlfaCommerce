@@ -56,13 +56,14 @@ export default class CategoryView extends React.PureComponent<Props, State> {
                         </div>
                         <div className='form-group row'>
                             <Route render={({history: History}) => (
-                            <div className='d-flex flex-row-reverse col-6'>
-                                <button className='btn btn-primary' onClick={this.saveChanges}>Zapisz</button>
-                                <button className='btn btn-outline-danger mr-2' onClick={() => this.deleteCategory(History)}
-                                        disabled={this.state.loading || this.hasProducts()}>Usuń
-                                    kategorię
-                                </button>
-                            </div>)} />
+                                <div className='d-flex flex-row-reverse col-6'>
+                                    <button className='btn btn-primary' onClick={this.saveChanges}>Zapisz</button>
+                                    <button className='btn btn-outline-danger mr-2'
+                                            onClick={() => this.deleteCategory(History)}
+                                            disabled={this.state.loading || this.hasProducts()}>Usuń
+                                        kategorię
+                                    </button>
+                                </div>)}/>
                         </div>
                         {this.hasProducts() ? (
                             <p className='text-danger'>
@@ -127,7 +128,7 @@ export default class CategoryView extends React.PureComponent<Props, State> {
 
     deleteCategory = (history: History): void => {
         api.delete(this.state.category.id)
-            .then(response => {
+            .then(() => {
                 history.push('/admin/categories')
             }, () => {
 

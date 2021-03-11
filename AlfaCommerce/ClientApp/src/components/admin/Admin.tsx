@@ -2,8 +2,9 @@
 import {Route, Switch} from "react-router";
 import Sidebar from "./sidebar/Sidebar";
 import CategoriesView from "./categories/CategoriesView";
-import CategoryView from "./categories/CategoryView";
+import CategoryDetailsView from "./categories/CategoryDetailsView";
 import NewCategoryView from "./categories/NewCategoryView";
+import ColorsView from "./colors/ColorsView";
 
 export default class Admin extends React.PureComponent {
     public render() {
@@ -19,8 +20,10 @@ export default class Admin extends React.PureComponent {
                             <Route path='/admin/categories' exact component={CategoriesView}/>
                             <Route path='/admin/categories/new' exact component={NewCategoryView}/>
                             <Route path='/admin/categories/:categoryId' render={(props => {
-                                return <CategoryView id={props.match.params.categoryId}/>
+                                return <CategoryDetailsView id={props.match.params.categoryId}/>
                             })}/>
+
+                            <Route path='/admin/colors' exact component={ColorsView}/>
                         </Switch>
                     </div>
                 </div>
