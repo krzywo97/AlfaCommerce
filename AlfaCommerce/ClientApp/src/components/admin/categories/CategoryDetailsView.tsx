@@ -1,7 +1,7 @@
 ﻿import React from "react";
 import {default as api} from '../../../api/categories';
 import {Category} from "../../../api/models";
-import './CategoryView.css'
+import './CategoryDetailsView.css'
 import {Route} from "react-router";
 import {History} from "history";
 
