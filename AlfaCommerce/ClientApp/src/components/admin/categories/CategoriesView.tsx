@@ -24,9 +24,9 @@ export default class CategoriesView extends React.PureComponent<{}, State> {
                 <div className='card'>
                     <div className='card-body bg-white'>
                         <h5 className='card-title'>Kategorie</h5>
-                        <table className='table table-striped table-hover'>
+                        <table className='table table-light table-striped table-hover'>
                             <thead>
-                            <tr className='thead-light'>
+                            <tr>
                                 <th>Nazwa</th>
                                 <th>Akcje</th>
                             </tr>
@@ -35,7 +35,7 @@ export default class CategoriesView extends React.PureComponent<{}, State> {
                             {this.state.categories.map(c => (
                                     <tr key={c.id}>
                                         <td>{c.name}</td>
-                                        <td><Link to={`/admin/categories/${c.id}`}>Szczegóły</Link></td>
+                                        <td><Link className='text-underline-hover' to={`/admin/categories/${c.id}`}>Szczegóły</Link></td>
                                     </tr>
                                 )
                             )}
@@ -45,7 +45,7 @@ export default class CategoriesView extends React.PureComponent<{}, State> {
                             <div className='col'>
                                 <Link to='/admin/categories/new' className='btn btn-outline-primary'>Nowa
                                     kategoria</Link>
-                                <button className='btn btn-outline-primary ml-2'
+                                <button className='btn btn-outline-primary ms-2'
                                         onClick={this.fetchCategories}>Odśwież
                                 </button>
                             </div>

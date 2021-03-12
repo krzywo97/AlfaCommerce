@@ -35,8 +35,8 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
             <div>
                 <div className='card'>
                     <div className='card-body bg-white'>
-                        <h5 className='card-title'>{this.state.category.name}</h5>
-                        <div className='form-group row'>
+                        <h5 className='card-title mb-3'>{this.state.category.name}</h5>
+                        <div className='form-group row mb-3'>
                             <div className='col-2 col-form-label'>
                                 <label htmlFor='id'>Identyfikator</label>
                             </div>
@@ -45,7 +45,7 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
                                        value={this.props.id}/>
                             </div>
                         </div>
-                        <div className="form-group row">
+                        <div className="form-group row mb-3">
                             <div className="col-2 col-form-label">
                                 <label htmlFor='new-name'>Nazwa</label>
                             </div>
@@ -54,11 +54,11 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
                                        onChange={this.handleNewNameChange} value={this.state.newName}/>
                             </div>
                         </div>
-                        <div className='form-group row'>
+                        <div className='form-group row mb-3'>
                             <Route render={({history: History}) => (
                                 <div className='d-flex flex-row-reverse col-6'>
                                     <button className='btn btn-primary' onClick={this.saveChanges}>Zapisz</button>
-                                    <button className='btn btn-outline-danger mr-2'
+                                    <button className='btn btn-outline-danger me-2'
                                             onClick={() => this.deleteCategory(History)}
                                             disabled={this.state.loading || this.hasProducts()}>Usuń
                                         kategorię
@@ -66,7 +66,7 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
                                 </div>)}/>
                         </div>
                         {this.hasProducts() ? (
-                            <p className='text-danger'>
+                            <p className='text-danger mb-0'>
                                 Nie można usunąć kategorii, ponieważ zawiera ona produkty
                             </p>
                         ) : ''}
@@ -74,7 +74,7 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
                 </div>
                 <div className='card mt-3'>
                     <div className='card-body'>
-                        <h5 className='card-title'>Produkty w kategorii {
+                        <h5 className='card-title mb-3'>Produkty w kategorii {
                             typeof this.state.category.products !== 'undefined' ? '(' + this.state.category.products.length + ')' : ''
                         }</h5>
                         <div className='card-deck'>

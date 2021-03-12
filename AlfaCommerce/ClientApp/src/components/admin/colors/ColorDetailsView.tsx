@@ -33,8 +33,8 @@ export default class ColorDetailsView extends React.PureComponent<Props, State> 
             <div>
                 <div className='card'>
                     <div className='card-body bg-white'>
-                        <h5 className='card-title'>{this.state.color.name}</h5>
-                        <div className='form-group row'>
+                        <h5 className='card-title mb-3'>{this.state.color.name}</h5>
+                        <div className='form-group row mb-3'>
                             <div className='col-2 col-form-label'>
                                 <label htmlFor='id'>Identyfikator</label>
                             </div>
@@ -43,7 +43,7 @@ export default class ColorDetailsView extends React.PureComponent<Props, State> 
                                        value={this.props.id}/>
                             </div>
                         </div>
-                        <div className="form-group row">
+                        <div className="form-group row mb-3">
                             <div className="col-2 col-form-label">
                                 <label htmlFor='new-name'>Nazwa</label>
                             </div>

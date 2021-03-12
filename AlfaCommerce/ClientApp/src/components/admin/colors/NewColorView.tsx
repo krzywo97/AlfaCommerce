@@ -17,7 +17,7 @@ export default class NewColorView extends PureComponent<{}, State> {
             <div className='card'>
                 <div className='card-body'>
                     <h5 className='card-title'>Nowy kolor</h5>
-                    <div className='form-group row'>
+                    <div className='form-group row mb-3'>
                         <div className='col-2 col-form-label'>
                             <label htmlFor='name'>Nazwa</label>
                         </div>

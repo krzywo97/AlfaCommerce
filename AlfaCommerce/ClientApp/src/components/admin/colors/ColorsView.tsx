@@ -23,9 +23,9 @@ export default class ColorsView extends React.PureComponent<{}, State> {
             <div className='card'>
                 <div className='card-body'>
                     <h5 className='card-title'>Kolory</h5>
-                    <table className='table table-hover table-striped'>
+                    <table className='table table-light table-hover table-striped'>
                         <thead>
-                        <tr className='thead-light'>
+                        <tr>
                             <th>Nazwa</th>
                             <th>Akcje</th>
                         </tr>
@@ -34,7 +34,7 @@ export default class ColorsView extends React.PureComponent<{}, State> {
                         {this.state.colors.map(c => (
                             <tr key={c.id}>
                                 <td>{c.name}</td>
-                                <td><Link to={`/admin/colors/${c.id}`}>Szczegóły</Link></td>
+                                <td><Link className='text-underline-hover' to={`/admin/colors/${c.id}`}>Szczegóły</Link></td>
                             </tr>
                         ))}
                         </tbody>
@@ -42,7 +42,7 @@ export default class ColorsView extends React.PureComponent<{}, State> {
                     <div className='row'>
                         <div className='col'>
                             <Link to='/admin/colors/new' className='btn btn-outline-primary'>Nowy kolor</Link>
-                            <button className='btn btn-outline-primary ml-2' onClick={this.fetchColors}>Odśwież</button>
+                            <button className='btn btn-outline-primary ms-2' onClick={this.fetchColors}>Odśwież</button>
                         </div>
                     </div>
                 </div>

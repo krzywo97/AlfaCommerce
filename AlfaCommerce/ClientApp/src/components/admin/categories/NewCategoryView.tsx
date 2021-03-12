@@ -16,8 +16,8 @@ export default class NewCategoryView extends PureComponent<{}, State> {
         return (
             <div className='card'>
                 <div className='card-body'>
-                    <h5 className='card-title'>Nowa kategoria</h5>
-                    <div className='form-group row'>
+                    <h5 className='card-title mb-3'>Nowa kategoria</h5>
+                    <div className='form-group row mb-3'>
                         <div className='col-2 col-form-label'>
                             <label htmlFor='name'>Nazwa</label>
                         </div>

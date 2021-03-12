@@ -5,7 +5,7 @@ import CategoriesView from "./categories/CategoriesView";
 import CategoryDetailsView from "./categories/CategoryDetailsView";
 import NewCategoryView from "./categories/NewCategoryView";
 import ColorsView from "./colors/ColorsView";
-import NewColorView from "./colors/NewCategoryView";
+import NewColorView from "./colors/NewColorView";
 import ColorDetailsView from "./colors/ColorDetailsView";
 import ProductsView from "./products/ProductsView";
 
@@ -17,7 +17,7 @@ export default class Admin extends React.PureComponent {
                     <div className='col-3'>
                         <Sidebar/>
                     </div>
-                    <div className='col'>
+                    <div className='col ms-3'>
                         <Switch>
                             <Route path='/admin' exact component={CategoriesView}/>
                             <Route path='/admin/categories' exact component={CategoriesView}/>
