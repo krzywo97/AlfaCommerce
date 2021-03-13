@@ -77,7 +77,7 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
                         <h5 className='card-title mb-3'>Produkty w kategorii {
                             typeof this.state.category.products !== 'undefined' ? '(' + this.state.category.products.length + ')' : ''
                         }</h5>
-                        <div className='d-flex flex-row'>
+                        <div className='d-flex flex-row flex-wrap'>
                             {this.state.category.products?.map(p => (
                                 <ProductTile name={p.name} imageUrl={p.photos[0].url} url={`/admin/products/${p.id}`}/>
                             ))}
