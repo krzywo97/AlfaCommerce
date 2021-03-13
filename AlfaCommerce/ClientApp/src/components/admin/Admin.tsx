@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import {Route, Switch} from "react-router";
-import Sidebar from "./sidebar/Sidebar";
+import Sidebar from "./widgets/Sidebar";
 import CategoriesView from "./categories/CategoriesView";
 import CategoryDetailsView from "./categories/CategoryDetailsView";
 import NewCategoryView from "./categories/NewCategoryView";

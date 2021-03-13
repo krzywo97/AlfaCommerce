@@ -4,6 +4,7 @@ import {Category} from "../../../api/models";
 import './CategoryDetailsView.css'
 import {Route} from "react-router";
 import {History} from "history";
+import ProductTile from "../widgets/ProductTile";
 
 type Props = {
     id: number
@@ -77,18 +78,10 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
                         <h5 className='card-title mb-3'>Produkty w kategorii {
                             typeof this.state.category.products !== 'undefined' ? '(' + this.state.category.products.length + ')' : ''
                         }</h5>
-                        <div className='card-deck'>
-                            {typeof this.state.category.products !== 'undefined' ? this.state.category.products.map(p => (
-                                <div key={p.id} className='col p-0'>
-                                    <div className='card'>
-                                        <img src={p.photos[0].url} alt='Zdjęcie produktu'
-                                             className='card-img-top'/>
-                                        <div className='card-body'>
-                                            <h6 className='card-title'>{p.name}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            )) : ''}
+                        <div className='d-flex flex-row'>
+                            {this.state.category.products?.map(p => (
+                                <ProductTile name={p.name} imageUrl={p.photos[0].url} url={`/admin/products/${p.id}`}/>
+                            ))}
                         </div>
                     </div>
                 </div>
