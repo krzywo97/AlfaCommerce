@@ -1,5 +1,6 @@
 import React from "react";
 import {Category, Color} from "../../../api/models";
+import './FiltersView.css'
 
 export interface Props {
     categories: Category[],
@@ -21,15 +22,17 @@ export default class FiltersView extends React.PureComponent<Props> {
                     <div className='col-3'>
                         <select className='form-select' name='category' aria-label='Kategoria'
                                 onChange={e => this.props.onFiltersChanged(e.target)}>
-                            <option value={0}>Botki</option>
-                            <option value={1}>Sneakersy</option>
+                            {this.props.categories.map(c => (
+                                <option value={c.id} key={c.id}>{c.name}</option>
+                            ))}
                         </select>
                     </div>
                     <div className='col-3'>
                         <select className='form-select' name='color' aria-label='Kolor'
                                 onChange={e => this.props.onFiltersChanged(e.target)}>
-                            <option>Czarny</option>
-                            <option>Biały</option>
+                            {this.props.colors.map(c => (
+                                <option value={c.id} key={c.id}>{c.name}</option>
+                            ))}
                         </select>
                     </div>
                 </div>

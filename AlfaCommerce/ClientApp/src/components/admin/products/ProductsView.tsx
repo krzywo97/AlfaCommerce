@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import {Category, Color, Product} from "../../../api/models";
-import FiltersView from './FiltersView'
+import FiltersView from '../widgets/FiltersView'
 import {default as CategoriesApi} from '../../../api/categories'
 import {default as ColorsApi} from '../../../api/colors'
 import {default as ProductsApi} from '../../../api/products'
