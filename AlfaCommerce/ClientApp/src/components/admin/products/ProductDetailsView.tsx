@@ -1,6 +1,8 @@
 import React from "react";
-import {Product} from "../../../api/models";
-import {default as api} from '../../../api/products'
+import {Category, Color, Product} from "../../../api/models";
+import {default as CategoriesApi} from '../../../api/categories'
+import {default as ColorsApi} from '../../../api/colors'
+import {default as ProductsApi, EditProductRequest} from '../../../api/products'
 
 export interface Props {
     id: number
@@ -8,11 +10,16 @@ export interface Props {
 
 interface State {
     product: Product,
-    loading: boolean
+    newProduct: EditProductRequest,
+    loadingDetails: boolean,
+    colors: Color[],
+    loadingColors: boolean,
+    categories: Category[],
+    loadingCategories: boolean
 }
 
 export default class ProductDetailsView extends React.PureComponent<Props, State> {
-    state = {
+    state: State = {
         product: {
             id: this.props.id,
             name: '',
@@ -25,10 +32,25 @@ export default class ProductDetailsView extends React.PureComponent<Props, State
             photos: [],
             categories: []
         },
-        loading: true
+        newProduct: {
+            id: this.props.id,
+            name: '',
+            price: 0,
+            colorId: 0,
+            weight: 0,
+            photos: [],
+            categories: []
+        },
+        loadingDetails: true,
+        colors: [],
+        loadingColors: true,
+        categories: [],
+        loadingCategories: true
     }
 
     componentDidMount() {
+        this.fetchCategories()
+        this.fetchColors()
         this.fetchDetails()
     }
 
@@ -38,28 +60,186 @@ export default class ProductDetailsView extends React.PureComponent<Props, State
                 <div className='card'>
                     <div className='card-body'>
                         <h5>{this.state.product.name}</h5>
+                        <div className='row mb-3'>
+                            <div className='col-2 col-form-label'>
+                                <label htmlFor='id'>Identyfikator</label>
+                            </div>
+                            <div className='col-4'>
+                                <input type='text' id='id' className='form-control' readOnly={true}
+                                       value={this.props.id}/>
+                            </div>
+                        </div>
+                        <div className='row mb-3'>
+                            <div className='col-2 col-form-label'>
+                                <label htmlFor='name'>Nazwa</label>
+                            </div>
+                            <div className='col-4'>
+                                <input type='text' id='name' className='form-control'
+                                       name='name' value={this.state.newProduct.name}
+                                       onChange={e => this.handleInputChange(e.target)}/>
+                            </div>
+                        </div>
+                        <div className='row mb-3'>
+                            <div className='col-2 col-form-label'>
+                                <label htmlFor='price'>Cena</label>
+                            </div>
+                            <div className='col-4'>
+                                <input type='number' step='0.01' id='price' className='form-control'
+                                       name='price' value={this.state.newProduct.price}
+                                       onChange={e => this.handleInputChange(e.target)}/>
+                            </div>
+                        </div>
+                        <div className='row mb-3'>
+                            <div className='col-2 col-form-label'>
+                                <label htmlFor='weight'>Masa</label>
+                            </div>
+                            <div className='col-4'>
+                                <input type='number' step='1' id='weight' className='form-control'
+                                       name='weight' value={this.state.newProduct.weight}
+                                       onChange={e => this.handleInputChange(e.target)}/>
+                            </div>
+                        </div>
+                        <div className='row mb-3'>
+                            <div className='col-2 col-form-label'>
+                                <label htmlFor='color'>Kolor</label>
+                            </div>
+                            <div className='col-4'>
+                                <select id='color' className='form-select'
+                                        name='colorId' value={this.state.newProduct.colorId}
+                                        onChange={e => this.handleInputChange(e.target)}>
+                                    {this.state.colors.map(c => (
+                                        <option key={c.id} value={c.id}>{c.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                        <div className='row mb-3'>
+                            <div className='col-2 col-form-label'>
+                                <label htmlFor='category'>Kategoria</label>
+                            </div>
+                            <div className='col-4'>
+                                <select id='category' className='form-select'
+                                        name='categories' value={this.state.newProduct.categories[0] ?? 1}
+                                        onChange={e => {
+                                            let value = parseInt(e.target.value)
+                                            this.setState({
+                                                newProduct: {
+                                                    ...this.state.newProduct,
+                                                    categories: [value]
+                                                }
+                                            })
+                                        }}>
+                                    {this.state.categories.map(c => (
+                                        <option key={c.id} value={c.id}>{c.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <div className='d-flex flex-row-reverse col-6'>
+                                <button className='btn btn-primary'>Zapisz</button>
+                                <button className='btn btn-outline-danger me-2' onClick={this.deleteProduct}>Usuń
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         )
     }
 
-    fetchDetails = (): void => {
-        api.details(this.props.id)
+    fetchCategories = (): void => {
+        CategoriesApi.get()
             .then(response => {
                 this.setState({
-                    loading: false,
-                    product: response.data
+                    loadingCategories: false,
+                    categories: response.data
                 })
             }, () => {
                 this.setState({
-                    loading: false
+                    loadingCategories: false
                 })
             })
             .catch(() => {
                 this.setState({
-                    loading: false
+                    loadingCategories: false
                 })
             })
+    }
+
+    fetchColors = (): void => {
+        ColorsApi.get()
+            .then(response => {
+                this.setState({
+                    loadingColors: false,
+                    colors: response.data
+                })
+            }, () => {
+                this.setState({
+                    loadingColors: false
+                })
+            })
+            .catch(() => {
+                this.setState({
+                    loadingColors: false
+                })
+            })
+    }
+
+    fetchDetails = (): void => {
+        ProductsApi.details(this.props.id)
+            .then(response => {
+                this.setState({
+                    loadingDetails: false,
+                    product: response.data,
+                    newProduct: {
+                        id: this.props.id,
+                        name: response.data.name,
+                        colorId: response.data.color.id,
+                        price: response.data.price,
+                        weight: response.data.weight,
+                        categories: Object.assign({}, response.data.categories.map(c => c.id)),
+                        photos: Object.assign({}, response.data.photos.map(p => p.url))
+                    }
+                })
+            }, () => {
+                this.setState({
+                    loadingDetails: false
+                })
+            })
+            .catch(() => {
+                this.setState({
+                    loadingDetails: false
+                })
+            })
+    }
+
+    saveChanges = (): void => {
+
+    }
+
+    deleteProduct = (): void => {
+        ProductsApi.delete(this.props.id)
+            .then(() => {
+
+            }, () => {
+
+            })
+            .catch(() => {
+
+            })
+    }
+
+    handleInputChange = (target: EventTarget & HTMLInputElement | HTMLSelectElement): void => {
+        let name = target.name
+        let value = target.value
+        console.log([name, value])
+
+        this.setState({
+            newProduct: {
+                ...this.state.newProduct,
+                [name]: value
+            }
+        })
     }
 }

@@ -34,7 +34,7 @@ export default class ColorDetailsView extends React.PureComponent<Props, State> 
                 <div className='card'>
                     <div className='card-body bg-white'>
                         <h5 className='card-title mb-3'>{this.state.color.name}</h5>
-                        <div className='form-group row mb-3'>
+                        <div className='row mb-3'>
                             <div className='col-2 col-form-label'>
                                 <label htmlFor='id'>Identyfikator</label>
                             </div>
@@ -43,7 +43,7 @@ export default class ColorDetailsView extends React.PureComponent<Props, State> 
                                        value={this.props.id}/>
                             </div>
                         </div>
-                        <div className="form-group row mb-3">
+                        <div className="row mb-3">
                             <div className="col-2 col-form-label">
                                 <label htmlFor='new-name'>Nazwa</label>
                             </div>
@@ -52,7 +52,7 @@ export default class ColorDetailsView extends React.PureComponent<Props, State> 
                                        onChange={this.handleNewNameChange} value={this.state.newName}/>
                             </div>
                         </div>
-                        <div className='form-group row'>
+                        <div className='row'>
                             <Route render={() => (
                                 <div className='d-flex flex-row-reverse col-6'>
                                     <button className='btn btn-primary' onClick={this.saveChanges}>Zapisz</button>

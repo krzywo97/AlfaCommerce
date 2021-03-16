@@ -17,7 +17,7 @@ export default class NewCategoryView extends PureComponent<{}, State> {
             <div className='card'>
                 <div className='card-body'>
                     <h5 className='card-title mb-3'>Nowa kategoria</h5>
-                    <div className='form-group row mb-3'>
+                    <div className='row mb-3'>
                         <div className='col-2 col-form-label'>
                             <label htmlFor='name'>Nazwa</label>
                         </div>
@@ -26,7 +26,7 @@ export default class NewCategoryView extends PureComponent<{}, State> {
                                    onChange={this.handleNameChange}/>
                         </div>
                     </div>
-                    <div className='form-group row'>
+                    <div className='row'>
                         <Route render={({history: History}) => (
                             <div className='d-flex flex-row-reverse col-6'>
                                 <button onClick={() => this.save(History)} className='btn btn-primary'>Zapisz</button>

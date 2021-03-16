@@ -10,7 +10,17 @@ export interface NewProductRequest {
         weight: number,
     }
     categories: number[],
-    images: string[]
+    photos: string[]
+}
+
+export interface EditProductRequest {
+    id: number,
+    name: string,
+    price: number,
+    colorId: number,
+    weight: number,
+    categories: number[],
+    photos: string[]
 }
 
 export default class Colors {

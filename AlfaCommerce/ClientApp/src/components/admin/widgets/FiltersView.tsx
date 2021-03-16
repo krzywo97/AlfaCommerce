@@ -1,6 +1,5 @@
 import React from "react";
 import {Category, Color} from "../../../api/models";
-import './FiltersView.css'
 
 export interface Props {
     categories: Category[],
