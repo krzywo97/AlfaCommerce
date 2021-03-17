@@ -9,6 +9,7 @@ import NewColorView from "./colors/NewColorView";
 import ColorDetailsView from "./colors/ColorDetailsView";
 import ProductsView from "./products/ProductsView";
 import ProductDetailsView from "./products/ProductDetailsView";
+import NewProductView from "./products/NewProductView";
 
 export default class Admin extends React.PureComponent {
     public render() {
@@ -28,6 +29,7 @@ export default class Admin extends React.PureComponent {
                             })}/>
 
                             <Route path='/admin/products' exact component={ProductsView}/>
+                            <Route path='/admin/products/new' exact component={NewProductView}/>
                             <Route path='/admin/products/:productId' render={(props => (
                                 <ProductDetailsView id={props.match.params.productId}/>
                             ))}/>

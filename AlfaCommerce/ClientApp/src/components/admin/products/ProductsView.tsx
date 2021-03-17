@@ -5,6 +5,7 @@ import {default as CategoriesApi} from '../../../api/categories'
 import {default as ColorsApi} from '../../../api/colors'
 import {default as ProductsApi} from '../../../api/products'
 import ProductTile from "../widgets/ProductTile";
+import {Link} from "react-router-dom";
 
 interface Filters {
     category: number,
@@ -63,7 +64,10 @@ export default class ProductsView extends React.PureComponent<{}, State> {
                 </div>
                 <div className='card'>
                     <div className='card-body'>
-                        <h5 className='card-title'>Znalezione produkty ({(this.state.products ?? []).length})</h5>
+                        <div className='d-flex flex-row justify-content-between pe-2'>
+                            <h5 className='card-title'>Znalezione produkty ({(this.state.products ?? []).length})</h5>
+                            <Link to='/admin/products/new' className='text-underline-hover'>Nowy produkt</Link>
+                        </div>
                         <div className='d-flex flex-row flex-wrap'>
                             {this.state.products.map(p => (
                                 <ProductTile key={p.id} name={p.name} imageUrl={p.photos[0].url}

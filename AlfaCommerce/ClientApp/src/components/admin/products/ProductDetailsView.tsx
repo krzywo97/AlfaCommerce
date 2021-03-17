@@ -3,6 +3,8 @@ import {Category, Color, Product} from "../../../api/models";
 import {default as CategoriesApi} from '../../../api/categories'
 import {default as ColorsApi} from '../../../api/colors'
 import {default as ProductsApi, EditProductRequest} from '../../../api/products'
+import {History} from "history";
+import {Route} from "react-router";
 
 export interface Props {
     id: number
@@ -136,11 +138,14 @@ export default class ProductDetailsView extends React.PureComponent<Props, State
                             </div>
                         </div>
                         <div className='row'>
-                            <div className='d-flex flex-row-reverse col-6'>
-                                <button className='btn btn-primary'>Zapisz</button>
-                                <button className='btn btn-outline-danger me-2' onClick={this.deleteProduct}>Usuń
-                                </button>
-                            </div>
+                            <Route render={({history: History}) => (
+                                <div className='d-flex flex-row-reverse col-6'>
+                                    <button className='btn btn-primary'>Zapisz</button>
+                                    <button className='btn btn-outline-danger me-2'
+                                            onClick={e => this.deleteProduct(History)}>Usuń
+                                    </button>
+                                </div>
+                            )}/>
                         </div>
                     </div>
                 </div>
@@ -218,10 +223,10 @@ export default class ProductDetailsView extends React.PureComponent<Props, State
 
     }
 
-    deleteProduct = (): void => {
+    deleteProduct = (history: History): void => {
         ProductsApi.delete(this.props.id)
             .then(() => {
-
+                history.push('/admin/products')
             }, () => {
 
             })
@@ -233,7 +238,6 @@ export default class ProductDetailsView extends React.PureComponent<Props, State
     handleInputChange = (target: EventTarget & HTMLInputElement | HTMLSelectElement): void => {
         let name = target.name
         let value = target.value
-        console.log([name, value])
 
         this.setState({
             newProduct: {
