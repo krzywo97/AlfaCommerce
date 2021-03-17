@@ -1,5 +1,5 @@
-import React from "react";
-import {Category, Color} from "../../../api/models";
+import React from 'react'
+import {Category, Color} from '../../../api/models'
 
 export interface Props {
     categories: Category[],
@@ -57,6 +57,6 @@ export default class FiltersView extends React.PureComponent<Props> {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }

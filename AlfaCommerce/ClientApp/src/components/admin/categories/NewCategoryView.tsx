@@ -1,7 +1,7 @@
-﻿import React, {PureComponent} from "react";
-import {default as api} from '../../../api/categories';
-import {Route} from "react-router";
-import {History} from "history";
+﻿import React, {PureComponent} from 'react'
+import {default as api} from '../../../api/categories'
+import {Route} from 'react-router'
+import {History} from 'history'
 
 interface State {
     name: string
@@ -49,7 +49,7 @@ export default class NewCategoryView extends PureComponent<{}, State> {
             name: this.state.name,
             parentId: undefined
         }).then(response => {
-            history.push('/admin/categories');
+            history.push('/admin/categories')
         }, () => {
 
         }).catch(() => {

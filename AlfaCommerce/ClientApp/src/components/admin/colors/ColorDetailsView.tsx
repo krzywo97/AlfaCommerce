@@ -1,8 +1,8 @@
-﻿import React from "react";
-import {default as api} from '../../../api/colors';
-import {Color} from "../../../api/models";
-import {Route} from "react-router";
-import {History} from "history";
+﻿import React from 'react'
+import {default as api} from '../../../api/colors'
+import {Color} from '../../../api/models'
+import {Route} from 'react-router'
+import {History} from 'history'
 
 type Props = {
     id: number
@@ -22,10 +22,10 @@ export default class ColorDetailsView extends React.PureComponent<Props, State> 
         },
         loading: true,
         newName: ''
-    };
+    }
 
     componentDidMount(): void {
-        this.fetchDetails();
+        this.fetchDetails()
     }
 
     render() {
@@ -61,7 +61,7 @@ export default class ColorDetailsView extends React.PureComponent<Props, State> 
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 
     fetchDetails = (): void => {

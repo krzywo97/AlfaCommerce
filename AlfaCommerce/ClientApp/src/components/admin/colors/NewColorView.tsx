@@ -1,7 +1,7 @@
-﻿import React, {PureComponent} from "react";
-import {default as api} from '../../../api/colors';
-import {Route} from "react-router";
-import {History} from "history";
+﻿import React, {PureComponent} from 'react'
+import {default as api} from '../../../api/colors'
+import {Route} from 'react-router'
+import {History} from 'history'
 
 interface State {
     name: string
@@ -48,7 +48,7 @@ export default class NewColorView extends PureComponent<{}, State> {
         api.add({
             name: this.state.name
         }).then(() => {
-            history.push('/admin/colors');
+            history.push('/admin/colors')
         }, () => {
 
         }).catch(() => {

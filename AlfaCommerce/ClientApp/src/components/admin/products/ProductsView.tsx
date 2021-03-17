@@ -1,11 +1,11 @@
-﻿import React from "react";
-import {Category, Color, Product} from "../../../api/models";
+﻿import React from 'react'
+import {Category, Color, Product} from '../../../api/models'
 import FiltersView from '../widgets/FiltersView'
 import {default as CategoriesApi} from '../../../api/categories'
 import {default as ColorsApi} from '../../../api/colors'
 import {default as ProductsApi} from '../../../api/products'
-import ProductTile from "../widgets/ProductTile";
-import {Link} from "react-router-dom";
+import ProductTile from '../widgets/ProductTile'
+import {Link} from 'react-router-dom'
 
 interface Filters {
     category: number,
@@ -87,7 +87,7 @@ export default class ProductsView extends React.PureComponent<{}, State> {
         this.setState({
             filters: {
                 ...this.state.filters,
-                [name]: value,
+                [name]: value
             }
         })
     }

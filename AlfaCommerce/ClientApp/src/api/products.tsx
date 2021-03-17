@@ -1,6 +1,6 @@
 import api from './api'
-import {AxiosResponse} from "axios";
-import {Product} from "./models";
+import {AxiosResponse} from 'axios'
+import {Product} from './models'
 
 export interface NewProductRequest {
     product: {

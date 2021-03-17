@@ -1,6 +1,6 @@
-﻿import api from "./api";
-import {Category} from "./models";
-import {AxiosResponse} from "axios";
+﻿import api from './api'
+import {Category} from './models'
+import {AxiosResponse} from 'axios'
 
 export interface NewCategoryRequest {
     name: string,

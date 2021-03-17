@@ -1,20 +1,21 @@
-﻿import React from 'react';
-import {Route, Switch} from "react-router";
-import Sidebar from "./widgets/Sidebar";
-import CategoriesView from "./categories/CategoriesView";
-import CategoryDetailsView from "./categories/CategoryDetailsView";
-import NewCategoryView from "./categories/NewCategoryView";
-import ColorsView from "./colors/ColorsView";
-import NewColorView from "./colors/NewColorView";
-import ColorDetailsView from "./colors/ColorDetailsView";
-import ProductsView from "./products/ProductsView";
-import ProductDetailsView from "./products/ProductDetailsView";
-import NewProductView from "./products/NewProductView";
+﻿import React from 'react'
+import {Route, Switch} from 'react-router'
+import Sidebar from './widgets/Sidebar'
+import CategoriesView from './categories/CategoriesView'
+import CategoryDetailsView from './categories/CategoryDetailsView'
+import NewCategoryView from './categories/NewCategoryView'
+import ColorsView from './colors/ColorsView'
+import NewColorView from './colors/NewColorView'
+import ColorDetailsView from './colors/ColorDetailsView'
+import ProductsView from './products/ProductsView'
+import ProductDetailsView from './products/ProductDetailsView'
+import NewProductView from './products/NewProductView'
+import Layout from '../Layout'
 
 export default class Admin extends React.PureComponent {
     public render() {
         return (
-            <div>
+            <Layout fluid={false}>
                 <div className='d-flex flex-row'>
                     <div className='col-3'>
                         <Sidebar/>
@@ -42,7 +43,7 @@ export default class Admin extends React.PureComponent {
                         </Switch>
                     </div>
                 </div>
-            </div>
+            </Layout>
         )
     }
 }

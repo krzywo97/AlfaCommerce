@@ -1,7 +1,7 @@
-﻿import React from "react";
-import {Category} from "../../../api/models";
-import {default as api} from '../../../api/categories';
-import {Link} from "react-router-dom";
+﻿import React from 'react'
+import {Category} from '../../../api/models'
+import {default as api} from '../../../api/categories'
+import {Link} from 'react-router-dom'
 
 type State = {
     loading: boolean,
@@ -12,7 +12,7 @@ export default class CategoriesView extends React.PureComponent<{}, State> {
     state: State = {
         loading: true,
         categories: []
-    };
+    }
 
     componentDidMount(): void {
         this.fetchCategories()
@@ -35,7 +35,8 @@ export default class CategoriesView extends React.PureComponent<{}, State> {
                             {this.state.categories.map(c => (
                                     <tr key={c.id}>
                                         <td>{c.name}</td>
-                                        <td><Link className='text-underline-hover' to={`/admin/categories/${c.id}`}>Szczegóły</Link></td>
+                                        <td><Link className='text-underline-hover'
+                                                  to={`/admin/categories/${c.id}`}>Szczegóły</Link></td>
                                     </tr>
                                 )
                             )}

@@ -1,7 +1,7 @@
-﻿import React from "react";
-import {Color} from "../../../api/models";
+﻿import React from 'react'
+import {Color} from '../../../api/models'
 import {default as api} from '../../../api/colors'
-import {Link} from "react-router-dom";
+import {Link} from 'react-router-dom'
 
 export interface State {
     loading: boolean
@@ -34,7 +34,8 @@ export default class ColorsView extends React.PureComponent<{}, State> {
                         {this.state.colors.map(c => (
                             <tr key={c.id}>
                                 <td>{c.name}</td>
-                                <td><Link className='text-underline-hover' to={`/admin/colors/${c.id}`}>Szczegóły</Link></td>
+                                <td><Link className='text-underline-hover' to={`/admin/colors/${c.id}`}>Szczegóły</Link>
+                                </td>
                             </tr>
                         ))}
                         </tbody>

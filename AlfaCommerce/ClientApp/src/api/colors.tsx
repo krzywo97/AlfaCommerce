@@ -1,6 +1,6 @@
 ﻿import api from './api'
-import {AxiosResponse} from "axios";
-import {Color} from "./models";
+import {AxiosResponse} from 'axios'
+import {Color} from './models'
 
 export interface NewColorRequest {
     name: string

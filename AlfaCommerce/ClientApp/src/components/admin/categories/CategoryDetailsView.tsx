@@ -1,9 +1,9 @@
-﻿import React from "react";
-import {default as api} from '../../../api/categories';
-import {Category} from "../../../api/models";
-import {Route} from "react-router";
-import {History} from "history";
-import ProductTile from "../widgets/ProductTile";
+﻿import React from 'react'
+import {default as api} from '../../../api/categories'
+import {Category} from '../../../api/models'
+import {Route} from 'react-router'
+import {History} from 'history'
+import ProductTile from '../widgets/ProductTile'
 
 type Props = {
     id: number
@@ -24,10 +24,10 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
         },
         loading: true,
         newName: ''
-    };
+    }
 
     componentDidMount(): void {
-        this.fetchDetails();
+        this.fetchDetails()
     }
 
     render() {
@@ -86,7 +86,7 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 
     fetchDetails = (): void => {

@@ -1,10 +1,10 @@
-import React from "react";
-import {Category, Color, Product} from "../../../api/models";
+import React from 'react'
+import {Category, Color, Product} from '../../../api/models'
 import {default as CategoriesApi} from '../../../api/categories'
 import {default as ColorsApi} from '../../../api/colors'
 import {default as ProductsApi, EditProductRequest} from '../../../api/products'
-import {History} from "history";
-import {Route} from "react-router";
+import {History} from 'history'
+import {Route} from 'react-router'
 
 export interface Props {
     id: number

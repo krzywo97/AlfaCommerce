@@ -1,6 +1,6 @@
-import React from "react";
-import {Link} from "react-router-dom";
-import {ConditionalWrapper} from "../../widgets/ConditionalWrapper";
+import React from 'react'
+import {Link} from 'react-router-dom'
+import {ConditionalWrapper} from '../../widgets/ConditionalWrapper'
 
 export interface Props {
     name: string,
