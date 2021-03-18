@@ -6,20 +6,17 @@ export interface NewColorRequest {
     name: string
 }
 
-export default class Colors {
-    static get(): Promise<AxiosResponse<Color[]>> {
+export default {
+    get(): Promise<AxiosResponse<Color[]>> {
         return api<Color[]>('colors', 'get', {}, {})
-    }
-
-    static details(id: number): Promise<AxiosResponse<Color>> {
+    },
+    details(id: number): Promise<AxiosResponse<Color>> {
         return api<Color>('colors/' + id, 'get', {}, {})
-    }
-
-    static add(color: NewColorRequest): Promise<AxiosResponse> {
+    },
+    add(color: NewColorRequest): Promise<AxiosResponse> {
         return api<any>('colors', 'post', {}, color)
-    }
-
-    static delete(id: number): Promise<AxiosResponse> {
+    },
+    delete(id: number): Promise<AxiosResponse> {
         return api<any>('colors/' + id, 'delete', {}, {})
     }
 }

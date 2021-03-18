@@ -10,40 +10,37 @@ import ColorDetailsView from './colors/ColorDetailsView'
 import ProductsView from './products/ProductsView'
 import ProductDetailsView from './products/ProductDetailsView'
 import NewProductView from './products/NewProductView'
-import Layout from '../Layout'
 
 export default class Admin extends React.PureComponent {
     public render() {
         return (
-            <Layout fluid={false}>
-                <div className='d-flex flex-row'>
-                    <div className='col-3'>
-                        <Sidebar/>
-                    </div>
-                    <div className='col ms-3'>
-                        <Switch>
-                            <Route path='/admin' exact component={CategoriesView}/>
-                            <Route path='/admin/categories' exact component={CategoriesView}/>
-                            <Route path='/admin/categories/new' exact component={NewCategoryView}/>
-                            <Route path='/admin/categories/:categoryId' render={(props => {
-                                return <CategoryDetailsView id={props.match.params.categoryId}/>
-                            })}/>
-
-                            <Route path='/admin/products' exact component={ProductsView}/>
-                            <Route path='/admin/products/new' exact component={NewProductView}/>
-                            <Route path='/admin/products/:productId' render={(props => (
-                                <ProductDetailsView id={props.match.params.productId}/>
-                            ))}/>
-
-                            <Route path='/admin/colors' exact component={ColorsView}/>
-                            <Route path='/admin/colors/new' exact component={NewColorView}/>
-                            <Route path='/admin/colors/:colorId' render={(props) => (
-                                <ColorDetailsView id={props.match.params.colorId}/>
-                            )}/>
-                        </Switch>
-                    </div>
+            <div className='d-flex flex-row'>
+                <div className='col-3'>
+                    <Sidebar/>
                 </div>
-            </Layout>
+                <div className='col ms-3'>
+                    <Switch>
+                        <Route path='/admin' exact component={CategoriesView}/>
+                        <Route path='/admin/categories' exact component={CategoriesView}/>
+                        <Route path='/admin/categories/new' exact component={NewCategoryView}/>
+                        <Route path='/admin/categories/:categoryId' render={(props => {
+                            return <CategoryDetailsView id={props.match.params.categoryId}/>
+                        })}/>
+
+                        <Route path='/admin/products' exact component={ProductsView}/>
+                        <Route path='/admin/products/new' exact component={NewProductView}/>
+                        <Route path='/admin/products/:productId' render={(props => (
+                            <ProductDetailsView id={props.match.params.productId}/>
+                        ))}/>
+
+                        <Route path='/admin/colors' exact component={ColorsView}/>
+                        <Route path='/admin/colors/new' exact component={NewColorView}/>
+                        <Route path='/admin/colors/:colorId' render={(props) => (
+                            <ColorDetailsView id={props.match.params.colorId}/>
+                        )}/>
+                    </Switch>
+                </div>
+            </div>
         )
     }
 }

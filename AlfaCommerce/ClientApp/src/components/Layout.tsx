@@ -1,6 +1,7 @@
 import React from 'react'
 import {Container} from 'reactstrap'
 import NavMenu from '../components/widgets/NavMenu'
+import CategoriesBar from "./widgets/CategoriesBar";
 
 interface Props {
     fluid: boolean
@@ -15,7 +16,8 @@ export default class Layout extends React.PureComponent<Props, { children?: Reac
         return (
             <React.Fragment>
                 <NavMenu marginBottom={!this.props.fluid}/>
-                <Container fluid={this.props.fluid}>
+                <CategoriesBar categories={[]}/>
+                <Container fluid={this.props.fluid} className={this.props.fluid ? 'p-0' : ''}>
                     {this.props.children}
                 </Container>
             </React.Fragment>

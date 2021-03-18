@@ -1,7 +1,4 @@
 import * as React from 'react'
-import {connect} from 'react-redux'
-import CategoriesBar from './widgets/CategoriesBar'
-import Layout from './Layout'
 import {Category} from '../api/models'
 import {default as CategoriesApi} from '../api/categories'
 
@@ -10,7 +7,7 @@ interface State {
     categoriesLoading: boolean
 }
 
-class Home extends React.PureComponent<{}, State> {
+export default class Home extends React.PureComponent<{}, State> {
     state: State = {
         categories: [],
         categoriesLoading: true
@@ -22,10 +19,9 @@ class Home extends React.PureComponent<{}, State> {
 
     render() {
         return (
-            <Layout fluid={true}>
-                <CategoriesBar categories={this.state.categories}/>
+            <div>
                 <h5>Najnowsze produkty</h5>
-            </Layout>
+            </div>
         )
     }
 
@@ -39,5 +35,3 @@ class Home extends React.PureComponent<{}, State> {
             })
     }
 }
-
-export default connect()(Home)

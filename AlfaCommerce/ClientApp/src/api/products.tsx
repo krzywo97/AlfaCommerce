@@ -33,20 +33,17 @@ export interface Filters {
     name?: string
 }
 
-export default class Colors {
-    static get(filters?: Filters): Promise<AxiosResponse<Product[]>> {
+export default {
+    get(filters?: Filters): Promise<AxiosResponse<Product[]>> {
         return api<Product[]>('products', 'get', {filters}, {})
-    }
-
-    static details(id: number): Promise<AxiosResponse<Product>> {
+    },
+    details(id: number): Promise<AxiosResponse<Product>> {
         return api<Product>('products/' + id, 'get', {}, {})
-    }
-
-    static add(product: NewProductRequest): Promise<AxiosResponse> {
+    },
+    add(product: NewProductRequest): Promise<AxiosResponse> {
         return api<any>('products', 'post', {}, product)
-    }
-
-    static delete(id: number): Promise<AxiosResponse> {
+    },
+    delete(id: number): Promise<AxiosResponse> {
         return api<any>('products/' + id, 'delete', {}, {})
     }
 }

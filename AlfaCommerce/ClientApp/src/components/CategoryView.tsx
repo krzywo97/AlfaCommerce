@@ -1,5 +1,4 @@
 import React from 'react'
-import Layout from './Layout'
 import {Category, Color, Product} from '../api/models'
 import {default as CategoriesApi} from '../api/categories'
 import {default as ColorsApi} from '../api/colors'
@@ -49,30 +48,28 @@ export default class CategoryView extends React.PureComponent<Props, State> {
 
     render() {
         return (
-            <Layout fluid={false}>
-                <div className='d-flex flex-row'>
-                    <div className='col-3'>
-                        <FiltersView colors={this.state.colors} filters={this.state.filters}
-                                     onFiltersChanged={this.handleFiltersChange} onApplyFilters={this.fetchProducts}
-                                     onResetFilters={this.resetFilters}/>
-                    </div>
-                    <div className='col ms-3'>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <h5 className='card-title'>Produkty w kategorii {this.state.category.name} {
-                                    this.state.products.length > 0 ? ` (${this.state.products.length})` : ''
-                                }</h5>
-                                <div className='d-flex flex-row flex-wrap'>
-                                    {this.state.products.map(p => (
-                                        <ProductTile key={p.id} name={p.name} imageUrl={p.photos[0].url}
-                                                     url={`/products/${p.id}`}/>
-                                    ))}
-                                </div>
+            <div className='d-flex flex-row'>
+                <div className='col-3'>
+                    <FiltersView colors={this.state.colors} filters={this.state.filters}
+                                 onFiltersChanged={this.handleFiltersChange} onApplyFilters={this.fetchProducts}
+                                 onResetFilters={this.resetFilters}/>
+                </div>
+                <div className='col ms-3'>
+                    <div className='card'>
+                        <div className='card-body'>
+                            <h5 className='card-title'>Produkty w kategorii {this.state.category.name} {
+                                this.state.products.length > 0 ? ` (${this.state.products.length})` : ''
+                            }</h5>
+                            <div className='d-flex flex-row flex-wrap'>
+                                {this.state.products.map(p => (
+                                    <ProductTile key={p.id} name={p.name} imageUrl={p.photos[0].url}
+                                                 url={`/products/${p.id}`}/>
+                                ))}
                             </div>
                         </div>
                     </div>
                 </div>
-            </Layout>
+            </div>
         )
     }
 
