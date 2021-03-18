@@ -23,9 +23,19 @@ export interface EditProductRequest {
     photos: string[]
 }
 
+export interface Filters {
+    category?: number,
+    color?: number,
+    minPrice?: number | string,
+    maxPrice?: number | string,
+    minWeight?: number | string,
+    maxWeight?: number | string,
+    name?: string
+}
+
 export default class Colors {
-    static get(): Promise<AxiosResponse<Product[]>> {
-        return api<Product[]>('products', 'get', {}, {})
+    static get(filters?: Filters): Promise<AxiosResponse<Product[]>> {
+        return api<Product[]>('products', 'get', {filters}, {})
     }
 
     static details(id: number): Promise<AxiosResponse<Product>> {

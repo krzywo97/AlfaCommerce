@@ -3,7 +3,7 @@ import {default as api} from '../../../api/categories'
 import {Category} from '../../../api/models'
 import {Route} from 'react-router'
 import {History} from 'history'
-import ProductTile from '../widgets/ProductTile'
+import ProductTile from '../../widgets/ProductTile'
 
 type Props = {
     id: number

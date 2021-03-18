@@ -3,19 +3,9 @@ import {Category, Color, Product} from '../../../api/models'
 import FiltersView from '../widgets/FiltersView'
 import {default as CategoriesApi} from '../../../api/categories'
 import {default as ColorsApi} from '../../../api/colors'
-import {default as ProductsApi} from '../../../api/products'
-import ProductTile from '../widgets/ProductTile'
+import {default as ProductsApi, Filters} from '../../../api/products'
+import ProductTile from '../../widgets/ProductTile'
 import {Link} from 'react-router-dom'
-
-interface Filters {
-    category: number,
-    color: number,
-    minPrice?: number,
-    maxPrice?: number,
-    minWeight?: number,
-    maxWeight?: number,
-    name?: string
-}
 
 interface State {
     filters: Filters,

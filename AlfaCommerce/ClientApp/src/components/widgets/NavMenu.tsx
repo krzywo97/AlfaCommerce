@@ -17,9 +17,9 @@ export default class NavMenu extends React.PureComponent<Props, State> {
     }
 
     public render() {
-        let navbarClass = 'navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow'
+        let navbarClass = 'navbar-expand-sm navbar-toggleable-sm border-bottom'
         if (this.props.marginBottom) {
-            navbarClass += ' mb-3'
+            navbarClass += ' mb-3 box-shadow'
         }
 
         return (
