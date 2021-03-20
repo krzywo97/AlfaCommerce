@@ -1,36 +1,45 @@
 import * as React from 'react'
-import {Category} from '../api/models'
-import {default as CategoriesApi} from '../api/categories'
+import {Product} from '../api/models'
+import {default as ProductsApi} from '../api/products'
+import ProductTile from './widgets/ProductTile'
 
 interface State {
-    categories: Category[],
-    categoriesLoading: boolean
+    products: Product[],
+    productsLoading: boolean
 }
 
 export default class Home extends React.PureComponent<{}, State> {
     state: State = {
-        categories: [],
-        categoriesLoading: true
+        products: [],
+        productsLoading: true
     }
 
     componentDidMount() {
-        this.fetchCategories()
+        this.fetchProducts()
     }
 
     render() {
         return (
-            <div>
-                <h5>Najnowsze produkty</h5>
+            <div className='card'>
+                <div className='card-body'>
+                    <h5 className='card-title'>Najnowsze produkty</h5>
+                    <div className='d-flex flex-row flex-wrap'>
+                        {this.state.products.map(p => (
+                            <ProductTile key={p.id} name={p.name} imageUrl={p.photos[0].url} url={`/products/${p.id}`}
+                                         className='col-6 col-md-4 col-lg-3 col-xl-2 p-1'/>
+                        ))}
+                    </div>
+                </div>
             </div>
         )
     }
 
-    fetchCategories = (): void => {
-        CategoriesApi.get()
+    fetchProducts = (): void => {
+        ProductsApi.get()
             .then(response => {
                 this.setState({
-                    categories: response.data,
-                    categoriesLoading: false
+                    products: response.data,
+                    productsLoading: false
                 })
             })
     }

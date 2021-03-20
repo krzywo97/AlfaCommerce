@@ -37,26 +37,26 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
                     <div className='card-body bg-white'>
                         <h5 className='card-title mb-3'>{this.state.category.name}</h5>
                         <div className='row mb-3'>
-                            <div className='col-2 col-form-label'>
+                            <div className='col-12 col-md-3 col-form-label'>
                                 <label htmlFor='id'>Identyfikator</label>
                             </div>
-                            <div className='col-4'>
+                            <div className='col col-md-5'>
                                 <input type='text' id='id' className='form-control' readOnly={true}
                                        value={this.props.id}/>
                             </div>
                         </div>
                         <div className="row mb-3">
-                            <div className="col-2 col-form-label">
+                            <div className="col-12 col-md-3 col-form-label">
                                 <label htmlFor='new-name'>Nazwa</label>
                             </div>
-                            <div className="col-4">
+                            <div className="col col-md-5">
                                 <input type="text" id="new-name" className='form-control'
                                        onChange={this.handleNewNameChange} value={this.state.newName}/>
                             </div>
                         </div>
                         <div className='row mb-3'>
                             <Route render={({history: History}) => (
-                                <div className='d-flex flex-row-reverse col-6'>
+                                <div className='d-flex flex-row-reverse col col-lg-8'>
                                     <button className='btn btn-primary' onClick={this.saveChanges}>Zapisz</button>
                                     <button className='btn btn-outline-danger me-2'
                                             onClick={() => this.deleteCategory(History)}
@@ -80,7 +80,8 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
                         <div className='d-flex flex-row flex-wrap'>
                             {this.state.category.products?.map(p => (
                                 <ProductTile key={p.id} name={p.name} imageUrl={p.photos[0].url}
-                                             url={`/admin/products/${p.id}`}/>
+                                             url={`/admin/products/${p.id}`}
+                                             className='col-6 col-md-4 col-md-3 col-xl-2 p-2'/>
                             ))}
                         </div>
                     </div>

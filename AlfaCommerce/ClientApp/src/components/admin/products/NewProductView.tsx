@@ -45,10 +45,10 @@ export default class NewProductView extends React.PureComponent<{}, State> {
             let id = `photo${i + 1}`
             imageRows[i] = (
                 <div className='row mb-3' key={i}>
-                    <div className='col-2 col-form-label'>
+                    <div className='col-12 col-md-3 col-form-label'>
                         <label htmlFor={id}>Zdjęcie {i + 1}</label>
                     </div>
-                    <div className='col-4'>
+                    <div className='col col-md-5'>
                         <input type='text' className='form-control' id={id} name={id}
                                value={this.state.product.photos[i]}
                                onChange={e => this.handlePhotoChange(i, e.target.value)}/>
@@ -62,40 +62,40 @@ export default class NewProductView extends React.PureComponent<{}, State> {
                 <div className='card-body'>
                     <h5 className='card-title mb-3'>Nowy produkt</h5>
                     <div className='row mb-3'>
-                        <div className='col-2 col-form-label'>
+                        <div className='col-12 col-md-3 col-form-label'>
                             <label htmlFor='name'>Nazwa</label>
                         </div>
-                        <div className='col-4'>
+                        <div className='col col-md-5'>
                             <input type='text' className='form-control' id='name' name='name'
                                    value={this.state.product.product.name}
                                    onChange={e => this.handleProductChange(e.target)}/>
                         </div>
                     </div>
                     <div className='row mb-3'>
-                        <div className='col-2 col-form-label'>
+                        <div className='col-12 col-md-3 col-form-label'>
                             <label htmlFor='price'>Cena</label>
                         </div>
-                        <div className='col-4'>
+                        <div className='col col-md-5'>
                             <input type='number' step={0.01} className='form-control' id='price' name='price'
                                    value={this.state.product.product.price}
                                    onChange={e => this.handleProductChange(e.target)}/>
                         </div>
                     </div>
                     <div className='row mb-3'>
-                        <div className='col-2 col-form-label'>
+                        <div className='col-12 col-md-3 col-form-label'>
                             <label htmlFor='weight'>Masa</label>
                         </div>
-                        <div className='col-4'>
+                        <div className='col col-md-5'>
                             <input type='number' step={1} className='form-control' id='weight' name='weight'
                                    value={this.state.product.product.weight}
                                    onChange={e => this.handleProductChange(e.target)}/>
                         </div>
                     </div>
                     <div className='row mb-3'>
-                        <div className='col-2 col-form-label'>
+                        <div className='col-12 col-md-3 col-form-label'>
                             <label htmlFor='color'>Kolor</label>
                         </div>
-                        <div className='col-4'>
+                        <div className='col col-md-5'>
                             <select id='color' className='form-select'
                                     name='colorId'
                                     onChange={e => this.handleProductChange(e.target)}>
@@ -106,10 +106,10 @@ export default class NewProductView extends React.PureComponent<{}, State> {
                         </div>
                     </div>
                     <div className='row mb-3'>
-                        <div className='col-2 col-form-label'>
+                        <div className='col-12 col-md-3 col-form-label'>
                             <label htmlFor='category'>Kategoria</label>
                         </div>
-                        <div className='col-4'>
+                        <div className='col col-md-5'>
                             <select id='category' className='form-select' name='colorId'
                                     onChange={e => this.handleCategoryChange(parseInt(e.target.value))}>
                                 {this.state.categories.map(c => (
@@ -122,7 +122,7 @@ export default class NewProductView extends React.PureComponent<{}, State> {
                     <div className='row'>
                         {this.state.product.photos.map((p, i) => (
                             p.length > 0 ? (
-                                <div className='col-3' key={i}>
+                                <div className='col-3 mb-2' key={i}>
                                     <img src={p} alt='Podgląd zdjęcia' className='scaled-image'/>
                                 </div>
                             ) : ''
@@ -130,7 +130,7 @@ export default class NewProductView extends React.PureComponent<{}, State> {
                     </div>
                     <div className='row'>
                         <Route render={({history: History}) => (
-                            <div className='d-flex flex-row-reverse col-6'>
+                            <div className='d-flex flex-row-reverse col col-lg-8'>
                                 <button className='btn btn-primary' onClick={e => this.saveProduct(History)}>Zapisz
                                 </button>
                             </div>

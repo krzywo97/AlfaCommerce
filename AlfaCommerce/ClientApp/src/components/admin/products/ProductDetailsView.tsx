@@ -63,49 +63,49 @@ export default class ProductDetailsView extends React.PureComponent<Props, State
                     <div className='card-body'>
                         <h5>{this.state.product.name}</h5>
                         <div className='row mb-3'>
-                            <div className='col-2 col-form-label'>
+                            <div className='col-12 col-md-3 col-form-label'>
                                 <label htmlFor='id'>Identyfikator</label>
                             </div>
-                            <div className='col-4'>
+                            <div className='col col-md-5'>
                                 <input type='text' id='id' className='form-control' readOnly={true}
                                        value={this.props.id}/>
                             </div>
                         </div>
                         <div className='row mb-3'>
-                            <div className='col-2 col-form-label'>
+                            <div className='col-12 col-md-3 col-form-label'>
                                 <label htmlFor='name'>Nazwa</label>
                             </div>
-                            <div className='col-4'>
+                            <div className='col col-md-5'>
                                 <input type='text' id='name' className='form-control'
                                        name='name' value={this.state.newProduct.name}
                                        onChange={e => this.handleInputChange(e.target)}/>
                             </div>
                         </div>
                         <div className='row mb-3'>
-                            <div className='col-2 col-form-label'>
+                            <div className='col-12 col-md-3 col-form-label'>
                                 <label htmlFor='price'>Cena</label>
                             </div>
-                            <div className='col-4'>
+                            <div className='col col-md-5'>
                                 <input type='number' step='0.01' id='price' className='form-control'
                                        name='price' value={this.state.newProduct.price}
                                        onChange={e => this.handleInputChange(e.target)}/>
                             </div>
                         </div>
                         <div className='row mb-3'>
-                            <div className='col-2 col-form-label'>
+                            <div className='col-12 col-md-3 col-form-label'>
                                 <label htmlFor='weight'>Masa</label>
                             </div>
-                            <div className='col-4'>
+                            <div className='col col-md-5'>
                                 <input type='number' step='1' id='weight' className='form-control'
                                        name='weight' value={this.state.newProduct.weight}
                                        onChange={e => this.handleInputChange(e.target)}/>
                             </div>
                         </div>
                         <div className='row mb-3'>
-                            <div className='col-2 col-form-label'>
+                            <div className='col-12 col-md-3 col-form-label'>
                                 <label htmlFor='color'>Kolor</label>
                             </div>
-                            <div className='col-4'>
+                            <div className='col col-md-5'>
                                 <select id='color' className='form-select'
                                         name='colorId' value={this.state.newProduct.colorId}
                                         onChange={e => this.handleInputChange(e.target)}>
@@ -116,10 +116,10 @@ export default class ProductDetailsView extends React.PureComponent<Props, State
                             </div>
                         </div>
                         <div className='row mb-3'>
-                            <div className='col-2 col-form-label'>
+                            <div className='col-12 col-md-3 col-form-label'>
                                 <label htmlFor='category'>Kategoria</label>
                             </div>
-                            <div className='col-4'>
+                            <div className='col col-md-5'>
                                 <select id='category' className='form-select'
                                         name='categories' value={this.state.newProduct.categories[0] ?? 1}
                                         onChange={e => {
@@ -139,7 +139,7 @@ export default class ProductDetailsView extends React.PureComponent<Props, State
                         </div>
                         <div className='row'>
                             <Route render={({history: History}) => (
-                                <div className='d-flex flex-row-reverse col-6'>
+                                <div className='d-flex flex-row-reverse col col-lg-8'>
                                     <button className='btn btn-primary'>Zapisz</button>
                                     <button className='btn btn-outline-danger me-2'
                                             onClick={e => this.deleteProduct(History)}>Usuń

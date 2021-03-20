@@ -48,13 +48,13 @@ export default class CategoryView extends React.PureComponent<Props, State> {
 
     render() {
         return (
-            <div className='d-flex flex-row'>
-                <div className='col-3'>
+            <div className='d-flex flex-column flex-md-row'>
+                <div className='col-12 col-md-4 col-lg-3'>
                     <FiltersView colors={this.state.colors} filters={this.state.filters}
                                  onFiltersChanged={this.handleFiltersChange} onApplyFilters={this.fetchProducts}
                                  onResetFilters={this.resetFilters}/>
                 </div>
-                <div className='col ms-3'>
+                <div className='col ms-0 ms-md-3 mt-3 mt-md-0'>
                     <div className='card'>
                         <div className='card-body'>
                             <h5 className='card-title'>Produkty w kategorii {this.state.category.name} {
@@ -63,7 +63,8 @@ export default class CategoryView extends React.PureComponent<Props, State> {
                             <div className='d-flex flex-row flex-wrap'>
                                 {this.state.products.map(p => (
                                     <ProductTile key={p.id} name={p.name} imageUrl={p.photos[0].url}
-                                                 url={`/products/${p.id}`}/>
+                                                 url={`/products/${p.id}`}
+                                                 className='col-6 col-lg-4 col-xl-3 p-1'/>
                                 ))}
                             </div>
                         </div>

@@ -35,26 +35,26 @@ export default class ColorDetailsView extends React.PureComponent<Props, State> 
                     <div className='card-body bg-white'>
                         <h5 className='card-title mb-3'>{this.state.color.name}</h5>
                         <div className='row mb-3'>
-                            <div className='col-2 col-form-label'>
+                            <div className='col-12 col-md-3 col-form-label'>
                                 <label htmlFor='id'>Identyfikator</label>
                             </div>
-                            <div className='col-4'>
+                            <div className='col col-md-5'>
                                 <input type='text' id='id' className='form-control' readOnly={true}
                                        value={this.props.id}/>
                             </div>
                         </div>
                         <div className="row mb-3">
-                            <div className="col-2 col-form-label">
+                            <div className="col-12 col-md-3 col-form-label">
                                 <label htmlFor='new-name'>Nazwa</label>
                             </div>
-                            <div className="col-4">
+                            <div className="col col-md-5">
                                 <input type="text" id="new-name" className='form-control'
                                        onChange={this.handleNewNameChange} value={this.state.newName}/>
                             </div>
                         </div>
                         <div className='row'>
                             <Route render={() => (
-                                <div className='d-flex flex-row-reverse col-6'>
+                                <div className='d-flex flex-row-reverse col-12 col-md-9 col-lg-8'>
                                     <button className='btn btn-primary' onClick={this.saveChanges}>Zapisz</button>
                                 </div>)}/>
                         </div>

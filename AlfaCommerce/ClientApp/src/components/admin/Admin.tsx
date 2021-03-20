@@ -14,11 +14,11 @@ import NewProductView from './products/NewProductView'
 export default class Admin extends React.PureComponent {
     public render() {
         return (
-            <div className='d-flex flex-row'>
-                <div className='col-3'>
+            <div className='d-flex flex-column flex-md-row'>
+                <div className='col-12 col-md-3'>
                     <Sidebar/>
                 </div>
-                <div className='col ms-3'>
+                <div className='col ms-0 ms-md-3 mt-3 mt-md-0'>
                     <Switch>
                         <Route path='/admin' exact component={CategoriesView}/>
                         <Route path='/admin/categories' exact component={CategoriesView}/>

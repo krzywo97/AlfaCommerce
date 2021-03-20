@@ -18,17 +18,17 @@ export default class NewColorView extends PureComponent<{}, State> {
                 <div className='card-body'>
                     <h5 className='card-title'>Nowy kolor</h5>
                     <div className='row mb-3'>
-                        <div className='col-2 col-form-label'>
+                        <div className='col-12 col-md-3 col-form-label'>
                             <label htmlFor='name'>Nazwa</label>
                         </div>
-                        <div className='col-4'>
+                        <div className='col col-md-5'>
                             <input type='text' className='form-control' id='name' name='name'
                                    onChange={this.handleNameChange}/>
                         </div>
                     </div>
                     <div className='row'>
                         <Route render={({history: History}) => (
-                            <div className='d-flex flex-row-reverse col-6'>
+                            <div className='d-flex flex-row-reverse col-12 col-md-9 col-lg-8'>
                                 <button onClick={() => this.save(History)} className='btn btn-primary'>Zapisz</button>
                             </div>
                         )}/>

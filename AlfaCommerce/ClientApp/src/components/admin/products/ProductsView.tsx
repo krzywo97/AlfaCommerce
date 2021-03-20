@@ -61,7 +61,7 @@ export default class ProductsView extends React.PureComponent<{}, State> {
                         <div className='d-flex flex-row flex-wrap'>
                             {this.state.products.map(p => (
                                 <ProductTile key={p.id} name={p.name} imageUrl={p.photos[0].url}
-                                             url={`products/${p.id}`}/>
+                                             url={`products/${p.id}`} className='col-6 col-md-4 col-lg-3 col-xl-2 p-1'/>
                             ))}
                         </div>
                     </div>
