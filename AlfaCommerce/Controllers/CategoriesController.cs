@@ -64,7 +64,7 @@ namespace AlfaCommerce.Controllers
                         Url = photo.Url
                     });
                 }
-                
+
                 var categories = new List<CategoryDto>();
                 foreach (var productCategory in p.Product.ProductCategories)
                 {
@@ -74,7 +74,7 @@ namespace AlfaCommerce.Controllers
                         Name = productCategory.Category.Name
                     });
                 }
-                
+
                 products.Add(new ProductDto()
                 {
                     Id = p.Product.Id,

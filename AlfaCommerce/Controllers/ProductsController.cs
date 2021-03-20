@@ -142,7 +142,7 @@ namespace AlfaCommerce.Controllers
             {
                 await _context.AddAsync(data.Product);
 
-                foreach (string i in data.Images)
+                foreach (string i in data.Photos)
                 {
                     ProductPhoto photo = new ProductPhoto
                     {
@@ -195,7 +195,13 @@ namespace AlfaCommerce.Controllers
             try
             {
                 var product = await _context.Products
+                    .Include(p => p.ProductPhotos)
                     .FirstOrDefaultAsync(p => p.Id == id);
+
+                foreach (var photo in product.ProductPhotos)
+                {
+                    _context.Remove(photo);
+                }
 
                 _context.Remove(product);
                 await _context.SaveChangesAsync();

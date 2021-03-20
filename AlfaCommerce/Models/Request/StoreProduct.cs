@@ -8,7 +8,7 @@ namespace AlfaCommerce.Models.Request
         [Required]
         public Product Product { get; set; }
         [Required]
-        public List<string> Images { get; set; }
+        public List<string> Photos { get; set; }
         [Required]
         public List<int> Categories { get; set; }
     }

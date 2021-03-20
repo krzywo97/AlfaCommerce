@@ -1,4 +1,8 @@
 /* Provide sufficient contrast against white background */
+html, body {
+  background-color: #fafafa;
+}
+
 a {
   color: #0366d6;
 }
@@ -11,4 +15,12 @@ code {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+.text-underline-hover {
+  text-decoration: none;
+}
+
+.text-underline-hover:hover {
+  text-decoration: underline;
 }
