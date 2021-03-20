@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace AlfaCommerce.Data.Migrations
+namespace AlfaCommerce.Data
 {
-    public partial class AlfaCommerceContext : DbContext
+    public partial class StoreContext : DbContext
     {
-        public AlfaCommerceContext()
+        public StoreContext()
         {
         }
 
-        public AlfaCommerceContext(DbContextOptions<AlfaCommerceContext> options)
+        public StoreContext(DbContextOptions<StoreContext> options)
             : base(options)
         {
         }
@@ -76,14 +76,14 @@ namespace AlfaCommerce.Data.Migrations
             {
                 entity.ToTable("products");
 
-                entity.HasIndex(e => e.Color, "IX_products_color");
+                entity.HasIndex(e => e.ColorId, "IX_products_color");
 
                 entity.HasIndex(e => e.Id, "products_id_uindex")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Color).HasColumnName("color");
+                entity.Property(e => e.ColorId).HasColumnName("color_id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -94,9 +94,9 @@ namespace AlfaCommerce.Data.Migrations
 
                 entity.Property(e => e.Weight).HasColumnName("weight");
 
-                entity.HasOne(d => d.ColorNavigation)
+                entity.HasOne(d => d.Color)
                     .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.Color)
+                    .HasForeignKey(d => d.ColorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("products_colors_id_fk");
             });
@@ -112,7 +112,7 @@ namespace AlfaCommerce.Data.Migrations
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
                 entity.HasOne(d => d.Category)
-                    .WithMany(p => p.ProductCategories)
+                    .WithMany(p => p.ProductsInCategory)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("product_categories_categories_id_fk");

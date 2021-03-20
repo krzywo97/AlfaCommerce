@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -10,15 +13,17 @@ namespace AlfaCommerce.Models
         public Category()
         {
             InverseParent = new HashSet<Category>();
-            ProductCategories = new HashSet<ProductCategory>();
+            ProductsInCategory = new HashSet<ProductCategory>();
         }
 
         public int Id { get; set; }
         public int? ParentId { get; set; }
+        
+        [Required]
         public string Name { get; set; }
 
         public virtual Category Parent { get; set; }
         public virtual ICollection<Category> InverseParent { get; set; }
-        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
+        public virtual ICollection<ProductCategory> ProductsInCategory { get; set; }
     }
 }
