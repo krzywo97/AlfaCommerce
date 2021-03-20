@@ -5,6 +5,7 @@ import Admin from './components/admin/Admin'
 import './custom.css'
 import CategoryView from './components/CategoryView'
 import Layout from './components/Layout'
+import ProductView from './components/ProductView'
 
 export default class App extends React.PureComponent {
     render() {
@@ -15,6 +16,10 @@ export default class App extends React.PureComponent {
                 <Route path='/categories/:categoryId' render={props => {
                     let categoryId = props.match.params.categoryId
                     return <CategoryView key={categoryId} id={categoryId}/>
+                }}/>
+                <Route path='/products/:categoryId' render={props => {
+                    let categoryId = props.match.params.categoryId
+                    return <ProductView key={categoryId} id={categoryId}/>
                 }}/>
             </Layout>
         )
