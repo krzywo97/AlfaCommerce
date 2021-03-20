@@ -1,9 +1,7 @@
-import * as Ui from './Ui'
 import * as Categories from './Categories'
 
 // The top-level state object
 export interface ApplicationState {
-    ui: Ui.State | undefined,
     categories: Categories.State | undefined
 }
 
@@ -11,7 +9,6 @@ export interface ApplicationState {
 // the reducer with the matching name. It's important that the names match exactly, and that the reducer
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
-    ui: Ui.reducer,
     categories: Categories.reducer
 }
 

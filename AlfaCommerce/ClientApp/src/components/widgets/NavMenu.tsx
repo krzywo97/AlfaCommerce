@@ -3,28 +3,19 @@ import {Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLin
 import {Link} from 'react-router-dom'
 import './NavMenu.css'
 
-interface Props {
-    marginBottom: boolean
-}
-
 interface State {
     isOpen: boolean
 }
 
-export default class NavMenu extends React.PureComponent<Props, State> {
+export default class NavMenu extends React.PureComponent<{}, State> {
     public state: State = {
         isOpen: false
     }
 
     public render() {
-        let navbarClass = 'navbar-expand-sm navbar-toggleable-sm border-bottom'
-        if (this.props.marginBottom) {
-            navbarClass += ' mb-3 box-shadow'
-        }
-
         return (
             <header>
-                <Navbar className={navbarClass} light>
+                <Navbar className='navbar-expand-sm navbar-toggleable-sm border-bottom' light>
                     <Container>
                         <NavbarBrand tag={Link} to="/">AlfaCommerce</NavbarBrand>
                         <NavbarToggler onClick={this.toggle} className="mr-2"/>

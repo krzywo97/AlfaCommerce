@@ -1,26 +1,35 @@
 import React from 'react'
 import {Container} from 'reactstrap'
 import NavMenu from '../components/widgets/NavMenu'
-import CategoriesBar from "./widgets/CategoriesBar";
+import CategoriesBar from './widgets/CategoriesBar'
+import {ApplicationState} from '../store'
+import {Category} from '../api/models'
+import {connect} from 'react-redux'
 
-interface Props {
-    fluid: boolean
+export interface Props {
+    categories?: Category[],
+    loadingCategories?: boolean
 }
 
-export default class Layout extends React.PureComponent<Props, { children?: React.ReactNode }> {
-    public static defaultProps: Props = {
-        fluid: false
-    }
-
+class Layout extends React.PureComponent<Props> {
     public render() {
         return (
             <React.Fragment>
-                <NavMenu marginBottom={!this.props.fluid}/>
-                <CategoriesBar categories={[]}/>
-                <Container fluid={this.props.fluid} className={this.props.fluid ? 'p-0' : ''}>
+                <NavMenu/>
+                <CategoriesBar categories={this.props.categories ?? []}/>
+                <Container>
                     {this.props.children}
                 </Container>
             </React.Fragment>
         )
     }
 }
+
+function mapStateToProps(state: ApplicationState, ownProps?: Props): Props {
+    return {
+        categories: state.categories?.data ?? [],
+        loadingCategories: state.categories?.loading ?? true
+    }
+}
+
+export default connect(mapStateToProps)(Layout)
