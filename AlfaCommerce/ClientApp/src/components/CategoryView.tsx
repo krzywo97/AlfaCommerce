@@ -116,12 +116,20 @@ export default class CategoryView extends React.PureComponent<Props, State> {
     }
 
     private resetFilters = (): void => {
+        // We need to pass an object with all the fields set, or input boxes will retain their values
         this.setState({
             filters: {
-                category: this.props.id
+                category: this.props.id,
+                color: 0,
+                minPrice: '',
+                maxPrice: '',
+                minWeight: '',
+                maxWeight: '',
+                name: ''
             }
+        }, () => {
+            this.fetchProducts()
         })
-        this.fetchProducts()
     }
 
     private fetchProducts = (): void => {
