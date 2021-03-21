@@ -48,7 +48,7 @@ export default class ProductsView extends React.PureComponent<{}, State> {
                 <div className='card mb-3'>
                     <div className='card-body'>
                         <h5 className='card-title mb-3'>Produkty</h5>
-                        <FiltersView onFiltersChanged={this.handleFiltersChange} onApplyFilters={this.applyFilters}
+                        <FiltersView onFiltersChanged={this.handleFiltersChange} onApplyFilters={this.fetchProducts}
                                      categories={this.state.categories} colors={this.state.colors}/>
                     </div>
                 </div>
@@ -80,10 +80,6 @@ export default class ProductsView extends React.PureComponent<{}, State> {
                 [name]: value
             }
         })
-    }
-
-    applyFilters = (): void => {
-
     }
 
     fetchCategories = (): void => {
@@ -125,7 +121,7 @@ export default class ProductsView extends React.PureComponent<{}, State> {
     }
 
     fetchProducts = (): void => {
-        ProductsApi.get()
+        ProductsApi.get(this.state.filters)
             .then(results => {
                 this.setState({
                     loadingProducts: false,

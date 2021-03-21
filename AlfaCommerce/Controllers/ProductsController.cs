@@ -32,7 +32,9 @@ namespace AlfaCommerce.Controllers
             [FromQuery(Name = "minPrice")] float? minPriceFilter,
             [FromQuery(Name = "maxPrice")] float? maxPriceFilter,
             [FromQuery(Name = "minWeight")] float? minWeightFilter,
-            [FromQuery(Name = "maxWeight")] float? maxWeightFilter)
+            [FromQuery(Name = "maxWeight")] float? maxWeightFilter,
+            [FromQuery(Name = "page")] int? page,
+            [FromQuery(Name = "perPage")] int? perPage)
         {
             if ((!ModelState.IsValid)
                 || (minPriceFilter > maxPriceFilter)
@@ -86,7 +88,20 @@ namespace AlfaCommerce.Controllers
                 products = products.Where(p => p.Weight <= maxWeightFilter);
             }
 
+            if (perPage < 1 || perPage > 50)
+            {
+                perPage = 20;
+            }
+
+            if (page < 1)
+            {
+                page = 1;
+            }
+
             var results = products
+                .OrderBy(p => p.Id)
+                .Take(perPage ?? 20)
+                .Skip(((page - 1) * perPage) ?? 0)
                 .AsSplitQuery()
                 .ToListAsync()
                 .Result;
