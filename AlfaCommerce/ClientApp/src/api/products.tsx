@@ -35,7 +35,7 @@ export interface Filters {
 
 export default {
     get(filters?: Filters): Promise<AxiosResponse<Product[]>> {
-        return api<Product[]>('products', 'get', {filters}, {})
+        return api<Product[]>('products', 'get', filters, {})
     },
     details(id: number): Promise<AxiosResponse<Product>> {
         return api<Product>('products/' + id, 'get', {}, {})

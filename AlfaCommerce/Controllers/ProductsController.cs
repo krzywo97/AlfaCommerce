@@ -25,18 +25,73 @@ namespace AlfaCommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ProductDto>> Index()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> Index(
+            [FromQuery(Name = "name")] string nameFilter,
+            [FromQuery(Name = "category")] int? categoryFilter,
+            [FromQuery(Name = "color")] int? colorFilter,
+            [FromQuery(Name = "minPrice")] float? minPriceFilter,
+            [FromQuery(Name = "maxPrice")] float? maxPriceFilter,
+            [FromQuery(Name = "minWeight")] float? minWeightFilter,
+            [FromQuery(Name = "maxWeight")] float? maxWeightFilter)
         {
-            var products = await _context.Products
+            if ((!ModelState.IsValid)
+                || (minPriceFilter > maxPriceFilter)
+                || (minWeightFilter > maxWeightFilter))
+            {
+                return BadRequest();
+            }
+
+            var products = _context.Products
                 .AsNoTracking()
                 .Include(p => p.Color)
                 .Include(p => p.ProductCategories)
                 .ThenInclude(pc => pc.Category)
                 .Include(p => p.ProductPhotos)
-                .AsSplitQuery()
-                .ToListAsync();
+                .AsQueryable();
 
-            return products.Select(p =>
+            if (!string.IsNullOrEmpty(nameFilter))
+            {
+                products = products.Where(p => p.Name.ToLower().Contains(nameFilter.ToLower()));
+            }
+
+            if (categoryFilter > 0)
+            {
+                products = products.Where(p =>
+                    p.ProductCategories.Where(pc =>
+                        pc.CategoryId == categoryFilter).ToList().Count > 0);
+            }
+
+            if (colorFilter > 0)
+            {
+                products = products.Where(p => p.ColorId == colorFilter);
+            }
+
+            if (minPriceFilter > 0)
+            {
+                products = products.Where(p => p.Price >= minPriceFilter);
+            }
+
+            if (maxPriceFilter > 0)
+            {
+                products = products.Where(p => p.Price <= maxPriceFilter);
+            }
+
+            if (minWeightFilter > 0)
+            {
+                products = products.Where(p => p.Weight >= minWeightFilter);
+            }
+
+            if (maxWeightFilter > 0)
+            {
+                products = products.Where(p => p.Weight <= maxWeightFilter);
+            }
+
+            var results = products
+                .AsSplitQuery()
+                .ToListAsync()
+                .Result;
+
+            return Ok(results.Select(p =>
             {
                 var color = new ColorDto()
                 {
@@ -75,7 +130,7 @@ namespace AlfaCommerce.Controllers
                     Categories = categories,
                     Photos = photos
                 };
-            });
+            }));
         }
 
         [HttpGet("{id}")]

@@ -34,8 +34,7 @@ export default class CategoryView extends React.PureComponent<Props, State> {
         products: [],
         loadingColors: true,
         filters: {
-            category: this.props.id,
-            color: 0
+            category: this.props.id
         },
         loadingProducts: true
     }
@@ -119,13 +118,7 @@ export default class CategoryView extends React.PureComponent<Props, State> {
     private resetFilters = (): void => {
         this.setState({
             filters: {
-                category: this.props.id,
-                color: 0,
-                name: '',
-                minPrice: '',
-                maxPrice: '',
-                minWeight: '',
-                maxWeight: ''
+                category: this.props.id
             }
         })
         this.fetchProducts()
