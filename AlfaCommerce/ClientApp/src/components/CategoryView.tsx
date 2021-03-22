@@ -6,6 +6,7 @@ import {default as ProductsApi} from '../api/products'
 import FiltersView from './widgets/FiltersView'
 import {Filters} from '../api/products'
 import ProductTile from './widgets/ProductTile'
+import Pagination from './widgets/Pagination'
 
 interface Props {
     id: number
@@ -16,6 +17,9 @@ interface State {
     colors: Color[],
     filters: Filters,
     products: Product[],
+    currentPage: number,
+    totalPages: number,
+    totalProducts: number,
     loadingColors: boolean,
     loadingProducts: boolean,
     loadingCategory: boolean
@@ -36,7 +40,10 @@ export default class CategoryView extends React.PureComponent<Props, State> {
         filters: {
             category: this.props.id
         },
-        loadingProducts: true
+        loadingProducts: true,
+        currentPage: 1,
+        totalPages: 1,
+        totalProducts: 0
     }
 
     componentDidMount() {
@@ -57,7 +64,7 @@ export default class CategoryView extends React.PureComponent<Props, State> {
                     <div className='card'>
                         <div className='card-body'>
                             <h5 className='card-title'>Produkty w kategorii {this.state.category.name} {
-                                this.state.products.length > 0 ? ` (${this.state.products.length})` : ''
+                                this.state.totalProducts > 0 ? ` (${this.state.totalProducts})` : ''
                             }</h5>
                             <div className='d-flex flex-row flex-wrap'>
                                 {this.state.products.map(p => (
@@ -65,6 +72,10 @@ export default class CategoryView extends React.PureComponent<Props, State> {
                                                  url={`/products/${p.id}`}
                                                  className='col-6 col-lg-4 col-xl-3 p-1'/>
                                 ))}
+                            </div>
+                            <div className='d-flex justify-content-center mt-2'>
+                                <Pagination currentPage={this.state.currentPage} totalPages={this.state.totalPages}
+                                            onPageChanged={this.changePage}/>
                             </div>
                         </div>
                     </div>
@@ -115,6 +126,12 @@ export default class CategoryView extends React.PureComponent<Props, State> {
         })
     }
 
+    private changePage = (page: number): void => {
+        this.setState({
+            currentPage: page
+        }, () => this.fetchProducts())
+    }
+
     private resetFilters = (): void => {
         // We need to pass an object with all the fields set, or input boxes will retain their values
         this.setState({
@@ -133,10 +150,12 @@ export default class CategoryView extends React.PureComponent<Props, State> {
     }
 
     private fetchProducts = (): void => {
-        ProductsApi.get(this.state.filters)
+        ProductsApi.get(this.state.filters, this.state.currentPage, 10)
             .then(response => {
                 this.setState({
-                    products: response.data,
+                    products: response.data.products,
+                    totalPages: response.data.totalPages,
+                    totalProducts: response.data.totalProducts,
                     loadingProducts: false
                 })
             }, () => {

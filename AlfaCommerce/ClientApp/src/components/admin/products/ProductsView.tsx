@@ -125,7 +125,7 @@ export default class ProductsView extends React.PureComponent<{}, State> {
             .then(results => {
                 this.setState({
                     loadingProducts: false,
-                    products: results.data
+                    products: results.data.products
                 })
             }, () => {
                 this.setState({
