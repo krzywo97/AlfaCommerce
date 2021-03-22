@@ -1,7 +1,6 @@
 import React from 'react'
 import {Category} from '../../api/models'
 import {Link} from 'react-router-dom'
-import './CategoriesBar.css'
 
 interface Props {
     categories: Category[]

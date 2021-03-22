@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using AlfaCommerce.Data;
 using AlfaCommerce.Models;
 using AlfaCommerce.Models.DTO;
 using AlfaCommerce.Models.Request;
+using AlfaCommerce.Models.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,56 +25,136 @@ namespace AlfaCommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ProductDto>> Index()
+        public async Task<ActionResult<ProductsList>> Index(
+            [FromQuery(Name = "name")] string nameFilter,
+            [FromQuery(Name = "category")] int? categoryFilter,
+            [FromQuery(Name = "color")] int? colorFilter,
+            [FromQuery(Name = "minPrice")] float? minPriceFilter,
+            [FromQuery(Name = "maxPrice")] float? maxPriceFilter,
+            [FromQuery(Name = "minWeight")] float? minWeightFilter,
+            [FromQuery(Name = "maxWeight")] float? maxWeightFilter,
+            [FromQuery(Name = "page")] int? page,
+            [FromQuery(Name = "perPage")] int? perPage)
         {
-            var products = await _context.Products
+            if ((!ModelState.IsValid)
+                || (minPriceFilter > maxPriceFilter)
+                || (minWeightFilter > maxWeightFilter))
+            {
+                return BadRequest();
+            }
+
+            var products = _context.Products
                 .AsNoTracking()
                 .Include(p => p.Color)
                 .Include(p => p.ProductCategories)
                 .ThenInclude(pc => pc.Category)
                 .Include(p => p.ProductPhotos)
-                .AsSplitQuery()
-                .ToListAsync();
+                .AsQueryable();
 
-            return products.Select(p =>
+            if (!string.IsNullOrEmpty(nameFilter))
             {
-                var color = new ColorDto()
-                {
-                    Id = p.Color.Id,
-                    Name = p.Color.Name
-                };
+                products = products.Where(p => p.Name.ToLower().Contains(nameFilter.ToLower()));
+            }
 
-                var categories = new List<CategoryDto>();
-                foreach (var c in p.ProductCategories)
+            if (categoryFilter > 0)
+            {
+                products = products.Where(p =>
+                    p.ProductCategories.Where(pc =>
+                        pc.CategoryId == categoryFilter).ToList().Count > 0);
+            }
+
+            if (colorFilter > 0)
+            {
+                products = products.Where(p => p.ColorId == colorFilter);
+            }
+
+            if (minPriceFilter > 0)
+            {
+                products = products.Where(p => p.Price >= minPriceFilter);
+            }
+
+            if (maxPriceFilter > 0)
+            {
+                products = products.Where(p => p.Price <= maxPriceFilter);
+            }
+
+            if (minWeightFilter > 0)
+            {
+                products = products.Where(p => p.Weight >= minWeightFilter);
+            }
+
+            if (maxWeightFilter > 0)
+            {
+                products = products.Where(p => p.Weight <= maxWeightFilter);
+            }
+
+            // We need to get total products count right after filters are applied
+            // And before applying pagination
+            int totalProductsCount = await products
+                .CountAsync();
+            
+            if (perPage == null || perPage < 1 || perPage > 60)
+            {
+                perPage = 40;
+            }
+
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            var results = products
+                .OrderBy(p => p.Id)
+                .Skip(((page - 1) * perPage) ?? 0)
+                .Take((int) perPage)
+                .AsSplitQuery()
+                .ToListAsync()
+                .Result.Select(p =>
                 {
-                    CategoryDto category = new CategoryDto()
+                    var color = new ColorDto()
                     {
-                        Id = c.Category.Id,
-                        Name = c.Category.Name
+                        Id = p.Color.Id,
+                        Name = p.Color.Name
                     };
-                    categories.Add(category);
-                }
 
-                var photos = new List<ProductPhotoDto>();
-                foreach (var photo in p.ProductPhotos)
-                {
-                    ProductPhotoDto photoDto = new ProductPhotoDto()
+                    var categories = new List<CategoryDto>();
+                    foreach (var c in p.ProductCategories)
                     {
-                        Url = photo.Url
-                    };
-                    photos.Add(photoDto);
-                }
+                        CategoryDto category = new CategoryDto()
+                        {
+                            Id = c.Category.Id,
+                            Name = c.Category.Name
+                        };
+                        categories.Add(category);
+                    }
 
-                return new ProductDto()
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    Weight = p.Weight,
-                    Color = color,
-                    Categories = categories,
-                    Photos = photos
-                };
+                    var photos = new List<ProductPhotoDto>();
+                    foreach (var photo in p.ProductPhotos)
+                    {
+                        ProductPhotoDto photoDto = new ProductPhotoDto()
+                        {
+                            Url = photo.Url
+                        };
+                        photos.Add(photoDto);
+                    }
+
+                    return new ProductDto()
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Price = p.Price,
+                        Weight = p.Weight,
+                        Color = color,
+                        Categories = categories,
+                        Photos = photos
+                    };
+                });
+
+            return Ok(new ProductsList()
+            {
+                Products = results,
+                TotalProducts = totalProductsCount,
+                TotalPages = (int) (Math.Ceiling(totalProductsCount / (double) perPage))
             });
         }
 

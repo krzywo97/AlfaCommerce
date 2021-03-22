@@ -13,6 +13,12 @@ export interface NewProductRequest {
     photos: string[]
 }
 
+export interface ProductsListResponse {
+    totalPages: number,
+    totalProducts: number,
+    products: Product[]
+}
+
 export interface EditProductRequest {
     id: number,
     name: string,
@@ -34,8 +40,8 @@ export interface Filters {
 }
 
 export default {
-    get(filters?: Filters): Promise<AxiosResponse<Product[]>> {
-        return api<Product[]>('products', 'get', {filters}, {})
+    get(filters?: Filters, page: number = 1, perPage: number = 40): Promise<AxiosResponse<ProductsListResponse>> {
+        return api<ProductsListResponse>('products', 'get', {...filters, page, perPage}, {})
     },
     details(id: number): Promise<AxiosResponse<Product>> {
         return api<Product>('products/' + id, 'get', {}, {})

@@ -6,6 +6,7 @@ import {default as ProductsApi} from '../api/products'
 import FiltersView from './widgets/FiltersView'
 import {Filters} from '../api/products'
 import ProductTile from './widgets/ProductTile'
+import Pagination from './widgets/Pagination'
 
 interface Props {
     id: number
@@ -16,6 +17,9 @@ interface State {
     colors: Color[],
     filters: Filters,
     products: Product[],
+    currentPage: number,
+    totalPages: number,
+    totalProducts: number,
     loadingColors: boolean,
     loadingProducts: boolean,
     loadingCategory: boolean
@@ -34,10 +38,12 @@ export default class CategoryView extends React.PureComponent<Props, State> {
         products: [],
         loadingColors: true,
         filters: {
-            category: this.props.id,
-            color: 0
+            category: this.props.id
         },
-        loadingProducts: true
+        loadingProducts: true,
+        currentPage: 1,
+        totalPages: 1,
+        totalProducts: 0
     }
 
     componentDidMount() {
@@ -58,7 +64,7 @@ export default class CategoryView extends React.PureComponent<Props, State> {
                     <div className='card'>
                         <div className='card-body'>
                             <h5 className='card-title'>Produkty w kategorii {this.state.category.name} {
-                                this.state.products.length > 0 ? ` (${this.state.products.length})` : ''
+                                this.state.totalProducts > 0 ? ` (${this.state.totalProducts})` : ''
                             }</h5>
                             <div className='d-flex flex-row flex-wrap'>
                                 {this.state.products.map(p => (
@@ -66,6 +72,16 @@ export default class CategoryView extends React.PureComponent<Props, State> {
                                                  url={`/products/${p.id}`}
                                                  className='col-6 col-lg-4 col-xl-3 p-1'/>
                                 ))}
+                                {this.state.products.length == 0 ? (
+                                    <div className='alert alert-info mt-2'>Nie znaleziono produktów spełniających
+                                        kryteria wyszukiwania</div>
+                                ) : (
+                                    <div className='col-12 d-flex justify-content-center mt-2'>
+                                        <Pagination currentPage={this.state.currentPage}
+                                                    totalPages={this.state.totalPages}
+                                                    onPageChanged={this.changePage}/>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -116,26 +132,36 @@ export default class CategoryView extends React.PureComponent<Props, State> {
         })
     }
 
+    private changePage = (page: number): void => {
+        this.setState({
+            currentPage: page
+        }, () => this.fetchProducts())
+    }
+
     private resetFilters = (): void => {
+        // We need to pass an object with all the fields set, or input boxes will retain their values
         this.setState({
             filters: {
                 category: this.props.id,
                 color: 0,
-                name: '',
                 minPrice: '',
                 maxPrice: '',
                 minWeight: '',
-                maxWeight: ''
+                maxWeight: '',
+                name: ''
             }
+        }, () => {
+            this.fetchProducts()
         })
-        this.fetchProducts()
     }
 
     private fetchProducts = (): void => {
-        ProductsApi.get(this.state.filters)
+        ProductsApi.get(this.state.filters, this.state.currentPage, 36)
             .then(response => {
                 this.setState({
-                    products: response.data,
+                    products: response.data.products,
+                    totalPages: response.data.totalPages,
+                    totalProducts: response.data.totalProducts,
                     loadingProducts: false
                 })
             }, () => {

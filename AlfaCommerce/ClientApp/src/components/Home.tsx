@@ -38,7 +38,7 @@ export default class Home extends React.PureComponent<{}, State> {
         ProductsApi.get()
             .then(response => {
                 this.setState({
-                    products: response.data,
+                    products: response.data.products,
                     productsLoading: false
                 })
             })
