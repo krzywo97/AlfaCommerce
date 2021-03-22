@@ -6,6 +6,7 @@ import {default as ColorsApi} from '../../../api/colors'
 import {default as ProductsApi, Filters} from '../../../api/products'
 import ProductTile from '../../widgets/ProductTile'
 import {Link} from 'react-router-dom'
+import Pagination from '../../widgets/Pagination'
 
 interface State {
     filters: Filters,
@@ -14,7 +15,10 @@ interface State {
     colors: Color[],
     loadingProducts: boolean,
     loadingCategories: boolean,
-    loadingColors: boolean
+    loadingColors: boolean,
+    currentPage: number,
+    totalPages: number,
+    totalProducts: number
 }
 
 export default class ProductsView extends React.PureComponent<{}, State> {
@@ -33,7 +37,10 @@ export default class ProductsView extends React.PureComponent<{}, State> {
         colors: [],
         loadingCategories: true,
         loadingColors: true,
-        loadingProducts: true
+        loadingProducts: true,
+        currentPage: 1,
+        totalPages: 1,
+        totalProducts: 0
     }
 
     componentDidMount() {
@@ -55,7 +62,7 @@ export default class ProductsView extends React.PureComponent<{}, State> {
                 <div className='card'>
                     <div className='card-body'>
                         <div className='d-flex flex-row justify-content-between pe-2'>
-                            <h5 className='card-title'>Znalezione produkty ({(this.state.products ?? []).length})</h5>
+                            <h5 className='card-title'>Znalezione produkty ({this.state.totalProducts})</h5>
                             <Link to='/admin/products/new' className='text-underline-hover'>Nowy produkt</Link>
                         </div>
                         <div className='d-flex flex-row flex-wrap'>
@@ -63,6 +70,15 @@ export default class ProductsView extends React.PureComponent<{}, State> {
                                 <ProductTile key={p.id} name={p.name} imageUrl={p.photos[0].url}
                                              url={`products/${p.id}`} className='col-6 col-md-4 col-lg-3 col-xl-2 p-1'/>
                             ))}
+                            {this.state.totalProducts == 0 ? (
+                                <div className='alert alert-info mt-2'>Nie znaleziono produktów spełniających kryteria
+                                    wyszukiwania</div>
+                            ) : (
+                                <div className='col-12 d-flex justify-content-center mt-2'>
+                                    <Pagination currentPage={this.state.currentPage} totalPages={this.state.totalPages}
+                                                onPageChanged={this.changePage}/>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -101,6 +117,12 @@ export default class ProductsView extends React.PureComponent<{}, State> {
             })
     }
 
+    changePage = (page: number): void => {
+        this.setState({
+            currentPage: page
+        }, () => this.fetchProducts())
+    }
+
     fetchColors = (): void => {
         ColorsApi.get()
             .then(results => {
@@ -121,11 +143,13 @@ export default class ProductsView extends React.PureComponent<{}, State> {
     }
 
     fetchProducts = (): void => {
-        ProductsApi.get(this.state.filters)
+        ProductsApi.get(this.state.filters, this.state.currentPage, 24)
             .then(results => {
                 this.setState({
                     loadingProducts: false,
-                    products: results.data.products
+                    products: results.data.products,
+                    totalPages: results.data.totalPages,
+                    totalProducts: results.data.totalProducts
                 })
             }, () => {
                 this.setState({

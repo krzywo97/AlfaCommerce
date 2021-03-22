@@ -59,17 +59,17 @@ export default class ProductView extends React.PureComponent<Props, State> {
                                 <b className='px-3 py-1'>Dlaczego warto?</b>
                                 <div className='d-flex flex-row justify-content-between px-3'>
                                     <span className='pt-1'>
-                                        <i className="bi bi-calendar2-check pe-2"/>Dostawa gratis
+                                        <i className="bi bi-emoji-smile pe-2"/>99,9% zadowolonych klientów
                                     </span>
                                 </div>
                                 <div className='d-flex flex-row justify-content-between px-3'>
                                     <span className='pt-1'>
-                                        <i className="bi bi-emoji-smile pe-2"/>Szybka dostawa - już jutro u Ciebie
+                                        <i className="bi bi-calendar2-check pe-2"/>Szybka dostawa &mdash; już jutro u Ciebie
                                     </span>
                                 </div>
                                 <div className='d-flex flex-row justify-content-between px-3'>
                                     <span className='pt-1'>
-                                        <i className="bi bi-patch-check pe-2"/>Darmowe zwroty
+                                        <i className="bi bi-patch-check pe-2"/>Darmowe zwroty i wymiany towaru
                                     </span>
                                 </div>
                                 <button className='btn btn-warning w-100 my-2'>KUP TERAZ</button>

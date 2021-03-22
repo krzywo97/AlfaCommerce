@@ -72,10 +72,16 @@ export default class CategoryView extends React.PureComponent<Props, State> {
                                                  url={`/products/${p.id}`}
                                                  className='col-6 col-lg-4 col-xl-3 p-1'/>
                                 ))}
-                            </div>
-                            <div className='d-flex justify-content-center mt-2'>
-                                <Pagination currentPage={this.state.currentPage} totalPages={this.state.totalPages}
-                                            onPageChanged={this.changePage}/>
+                                {this.state.products.length == 0 ? (
+                                    <div className='alert alert-info mt-2'>Nie znaleziono produktów spełniających
+                                        kryteria wyszukiwania</div>
+                                ) : (
+                                    <div className='col-12 d-flex justify-content-center mt-2'>
+                                        <Pagination currentPage={this.state.currentPage}
+                                                    totalPages={this.state.totalPages}
+                                                    onPageChanged={this.changePage}/>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -150,7 +156,7 @@ export default class CategoryView extends React.PureComponent<Props, State> {
     }
 
     private fetchProducts = (): void => {
-        ProductsApi.get(this.state.filters, this.state.currentPage, 10)
+        ProductsApi.get(this.state.filters, this.state.currentPage, 36)
             .then(response => {
                 this.setState({
                     products: response.data.products,
