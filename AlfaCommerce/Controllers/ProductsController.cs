@@ -220,6 +220,7 @@ namespace AlfaCommerce.Controllers
 
             try
             {
+                data.Product.Price = Math.Round(data.Product.Price, 2);
                 await _context.AddAsync(data.Product);
 
                 foreach (string i in data.Photos)
@@ -267,7 +268,7 @@ namespace AlfaCommerce.Controllers
                     .FirstOrDefaultAsync();
 
                 trackedProduct.Name = product.Name;
-                trackedProduct.Price = product.Price;
+                trackedProduct.Price = Math.Round(product.Price, 2);
                 trackedProduct.Weight = product.Weight;
                 trackedProduct.ColorId = product.ColorId;
                 _context.Update(trackedProduct);
@@ -279,14 +280,9 @@ namespace AlfaCommerce.Controllers
                         .Where(c => c.ProductId == product.Id && c.CategoryId == pc.CategoryId));
                 }
 
-                foreach (var p in trackedProduct.ProductPhotos)
-                {
-                    _context.RemoveRange(_context
-                        .ProductPhotos
-                        .Where(ph => ph.ProductId == product.Id));
-                }
-
-                //await _context.SaveChangesAsync();
+                _context.RemoveRange(_context
+                    .ProductPhotos
+                    .Where(ph => ph.ProductId == product.Id));
 
                 foreach (var c in product.Categories)
                 {
