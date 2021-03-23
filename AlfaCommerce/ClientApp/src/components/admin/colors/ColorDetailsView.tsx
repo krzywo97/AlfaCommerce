@@ -53,9 +53,11 @@ export default class ColorDetailsView extends React.PureComponent<Props, State> 
                             </div>
                         </div>
                         <div className='row'>
-                            <Route render={() => (
+                            <Route render={({history: History}) => (
                                 <div className='d-flex flex-row-reverse col-12 col-md-9 col-lg-8'>
-                                    <button className='btn btn-primary' onClick={this.saveChanges}>Zapisz</button>
+                                    <button className='btn btn-primary'
+                                            onClick={() => this.saveChanges(History)}>Zapisz
+                                    </button>
                                 </div>)}/>
                         </div>
                     </div>
@@ -90,8 +92,17 @@ export default class ColorDetailsView extends React.PureComponent<Props, State> 
         })
     }
 
-    saveChanges = (): void => {
+    saveChanges = (history: History): void => {
+        api.edit({
+            ...this.state.color,
+            name: this.state.newName
+        }).then(() => {
+            history.push('/admin/colors')
+        }, () => {
 
+        }).catch(() => {
+
+        })
     }
 
     deleteColor = (history: History): void => {

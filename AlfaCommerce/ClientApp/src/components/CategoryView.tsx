@@ -72,7 +72,7 @@ export default class CategoryView extends React.PureComponent<Props, State> {
                                                  url={`/products/${p.id}`}
                                                  className='col-6 col-lg-4 col-xl-3 p-1'/>
                                 ))}
-                                {this.state.products.length == 0 ? (
+                                {this.state.products.length === 0 ? (
                                     <div className='alert alert-info mt-2'>Nie znaleziono produktów spełniających
                                         kryteria wyszukiwania</div>
                                 ) : (

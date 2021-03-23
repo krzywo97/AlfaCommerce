@@ -35,7 +35,7 @@ function Pagination(props: Props) {
         })
     }
 
-    let shouldShowPageInsteadOfDots = props.currentPage - surrounding == 3
+    let shouldShowPageInsteadOfDots = props.currentPage - surrounding === 3
 
     // Three dots after first page button
     if (props.currentPage > surrounding + 2) {
@@ -57,11 +57,11 @@ function Pagination(props: Props) {
             number: i,
             key: i,
             label: i.toString(),
-            enabled: i != props.currentPage
+            enabled: i !== props.currentPage
         })
     }
 
-    shouldShowPageInsteadOfDots = props.currentPage + surrounding == props.totalPages - 2
+    shouldShowPageInsteadOfDots = props.currentPage + surrounding === props.totalPages - 2
 
     // Dots before last page button
     if (props.currentPage < props.totalPages - surrounding - 1) {
@@ -88,7 +88,7 @@ function Pagination(props: Props) {
         number: props.currentPage + 1,
         key: -2,
         label: 'Następna',
-        enabled: props.currentPage != props.totalPages
+        enabled: props.currentPage !== props.totalPages
     })
 
     return (

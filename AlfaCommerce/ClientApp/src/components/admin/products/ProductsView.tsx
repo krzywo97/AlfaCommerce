@@ -70,7 +70,7 @@ export default class ProductsView extends React.PureComponent<{}, State> {
                                 <ProductTile key={p.id} name={p.name} imageUrl={p.photos[0].url}
                                              url={`products/${p.id}`} className='col-6 col-md-4 col-lg-3 col-xl-2 p-1'/>
                             ))}
-                            {this.state.totalProducts == 0 ? (
+                            {this.state.totalProducts === 0 ? (
                                 <div className='alert alert-info mt-2'>Nie znaleziono produktów spełniających kryteria
                                     wyszukiwania</div>
                             ) : (

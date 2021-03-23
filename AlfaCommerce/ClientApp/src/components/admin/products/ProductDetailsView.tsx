@@ -137,12 +137,53 @@ export default class ProductDetailsView extends React.PureComponent<Props, State
                                 </select>
                             </div>
                         </div>
+                        <div className='row mb-3'>
+                            <div className='col-12 col-md-3 col-form-label'>
+                                <label htmlFor='photo1'>Zdjęcie 1</label>
+                            </div>
+                            <div className='col col-md-5'>
+                                <input type='text' id='photo1' className='form-control'
+                                       name='photos[0]' value={this.state.newProduct.photos[0]}
+                                       onChange={e => this.handlePhotoChange(0, e.target.value)}/>
+                            </div>
+                        </div>
+                        <div className='row mb-3'>
+                            <div className='col-12 col-md-3 col-form-label'>
+                                <label htmlFor='photo2'>Zdjęcie 2</label>
+                            </div>
+                            <div className='col col-md-5'>
+                                <input type='text' id='photo2' className='form-control'
+                                       name='photos[1]' value={this.state.newProduct.photos[1]}
+                                       onChange={e => this.handlePhotoChange(1, e.target.value)}/>
+                            </div>
+                        </div>
+                        <div className='row mb-3'>
+                            <div className='col-12 col-md-3 col-form-label'>
+                                <label htmlFor='photo3'>Zdjęcie 3</label>
+                            </div>
+                            <div className='col col-md-5'>
+                                <input type='text' id='photo3' className='form-control'
+                                       name='photos[2]' value={this.state.newProduct.photos[2]}
+                                       onChange={e => this.handlePhotoChange(2, e.target.value)}/>
+                            </div>
+                        </div>
+                        <div className='row'>
+                            {this.state.newProduct.photos.map((p, i) => (
+                                p.length > 0 ? (
+                                    <div className='col-3 mb-2' key={i}>
+                                        <img src={p} alt='Podgląd zdjęcia' className='scaled-image'/>
+                                    </div>
+                                ) : ''
+                            ))}
+                        </div>
                         <div className='row'>
                             <Route render={({history: History}) => (
                                 <div className='d-flex flex-row-reverse col col-lg-8'>
-                                    <button className='btn btn-primary'>Zapisz</button>
+                                    <button className='btn btn-primary'
+                                            onClick={() => this.saveChanges(History)}>Zapisz
+                                    </button>
                                     <button className='btn btn-outline-danger me-2'
-                                            onClick={e => this.deleteProduct(History)}>Usuń
+                                            onClick={() => this.deleteProduct(History)}>Usuń
                                     </button>
                                 </div>
                             )}/>
@@ -203,8 +244,8 @@ export default class ProductDetailsView extends React.PureComponent<Props, State
                         colorId: response.data.color.id,
                         price: response.data.price,
                         weight: response.data.weight,
-                        categories: Object.assign({}, response.data.categories.map(c => c.id)),
-                        photos: Object.assign({}, response.data.photos.map(p => p.url))
+                        categories: Object.values(response.data.categories.map(c => c.id)),
+                        photos: Object.values(response.data.photos.map(p => p.url))
                     }
                 })
             }, () => {
@@ -219,8 +260,23 @@ export default class ProductDetailsView extends React.PureComponent<Props, State
             })
     }
 
-    saveChanges = (): void => {
+    saveChanges = (history: History): void => {
+        let photos = Object.values(this.state.newProduct.photos)
+        let categories = Object.values(this.state.newProduct.categories)
 
+        ProductsApi.edit({
+            ...this.state.newProduct,
+            photos,
+            categories
+        })
+            .then(() => {
+                history.push('/admin/products')
+            }, () => {
+
+            }).catch(() => {
+
+            }
+        )
     }
 
     deleteProduct = (history: History): void => {
@@ -243,6 +299,18 @@ export default class ProductDetailsView extends React.PureComponent<Props, State
             newProduct: {
                 ...this.state.newProduct,
                 [name]: value
+            }
+        })
+    }
+
+    handlePhotoChange = (index: number, url: string): void => {
+        let photos = this.state.newProduct.photos
+        photos[index] = url
+
+        this.setState({
+            newProduct: {
+                ...this.state.newProduct,
+                photos
             }
         })
     }
