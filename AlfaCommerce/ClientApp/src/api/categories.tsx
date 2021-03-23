@@ -17,6 +17,9 @@ export default {
     add(category: NewCategoryRequest): Promise<AxiosResponse> {
         return api<any>('categories', 'post', {}, category)
     },
+    edit(category: Category): Promise<AxiosResponse> {
+        return api<any>('categories', 'put', {}, category)
+    },
     delete(id: number): Promise<AxiosResponse> {
         return api<any>('categories/' + id, 'delete', {}, {})
     }

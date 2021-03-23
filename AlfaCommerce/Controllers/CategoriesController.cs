@@ -29,6 +29,7 @@ namespace AlfaCommerce.Controllers
             var categories = await _context.Categories
                 .Include(c => c.InverseParent)
                 .Where(c => c.ParentId == null)
+                .OrderBy(c => c.Id)
                 .ToListAsync();
 
             return categories.Select(c => FillCategoryTree(c).Result);

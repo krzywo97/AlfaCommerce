@@ -16,6 +16,9 @@ export default {
     add(color: NewColorRequest): Promise<AxiosResponse> {
         return api<any>('colors', 'post', {}, color)
     },
+    edit(color: Color): Promise<AxiosResponse> {
+        return api<any>('colors', 'put', {}, color)
+    },
     delete(id: number): Promise<AxiosResponse> {
         return api<any>('colors/' + id, 'delete', {}, {})
     }

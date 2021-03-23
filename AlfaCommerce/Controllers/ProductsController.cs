@@ -92,7 +92,7 @@ namespace AlfaCommerce.Controllers
             // And before applying pagination
             int totalProductsCount = await products
                 .CountAsync();
-            
+
             if (perPage == null || perPage < 1 || perPage > 60)
             {
                 perPage = 40;
@@ -220,6 +220,7 @@ namespace AlfaCommerce.Controllers
 
             try
             {
+                data.Product.Price = Math.Round(data.Product.Price, 2);
                 await _context.AddAsync(data.Product);
 
                 foreach (string i in data.Photos)
@@ -254,11 +255,54 @@ namespace AlfaCommerce.Controllers
 
         [HttpPut]
         public async Task<IActionResult> Edit(
-            [Bind("name,price,color,weight")] Product product)
+            [Bind("id,name,price,color,weight,categories,photos")]
+            EditProduct product)
         {
             try
             {
-                _context.Update(product);
+                var trackedProduct = await _context
+                    .Products
+                    .Where(p => p.Id == product.Id)
+                    .Include(p => p.ProductCategories)
+                    .Include(p => p.ProductPhotos)
+                    .FirstOrDefaultAsync();
+
+                trackedProduct.Name = product.Name;
+                trackedProduct.Price = Math.Round(product.Price, 2);
+                trackedProduct.Weight = product.Weight;
+                trackedProduct.ColorId = product.ColorId;
+                _context.Update(trackedProduct);
+
+                foreach (var pc in trackedProduct.ProductCategories)
+                {
+                    _context.RemoveRange(_context
+                        .ProductCategories
+                        .Where(c => c.ProductId == product.Id && c.CategoryId == pc.CategoryId));
+                }
+
+                _context.RemoveRange(_context
+                    .ProductPhotos
+                    .Where(ph => ph.ProductId == product.Id));
+
+                foreach (var c in product.Categories)
+                {
+                    await _context.ProductCategories
+                        .AddAsync(new ProductCategory()
+                        {
+                            CategoryId = c,
+                            ProductId = product.Id
+                        });
+                }
+
+                foreach (var p in product.Photos)
+                {
+                    await _context.ProductPhotos.AddAsync(new ProductPhoto()
+                    {
+                        ProductId = product.Id,
+                        Url = p,
+                    });
+                }
+
                 await _context.SaveChangesAsync();
             }
             catch (Exception)

@@ -57,7 +57,9 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
                         <div className='row mb-3'>
                             <Route render={({history: History}) => (
                                 <div className='d-flex flex-row-reverse col col-lg-8'>
-                                    <button className='btn btn-primary' onClick={this.saveChanges}>Zapisz</button>
+                                    <button className='btn btn-primary'
+                                            onClick={() => this.saveChanges(History)}>Zapisz
+                                    </button>
                                     <button className='btn btn-outline-danger me-2'
                                             onClick={() => this.deleteCategory(History)}
                                             disabled={this.state.loading || this.hasProducts()}>Usuń
@@ -116,8 +118,17 @@ export default class CategoryDetailsView extends React.PureComponent<Props, Stat
         })
     }
 
-    saveChanges = (): void => {
+    saveChanges = (history: History): void => {
+        api.edit({
+            ...this.state.category,
+            name: this.state.newName
+        }).then(() => {
+            history.push('/admin/categories')
+        }, () => {
 
+        }).catch(() => {
+
+        })
     }
 
     deleteCategory = (history: History): void => {

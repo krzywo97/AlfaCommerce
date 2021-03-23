@@ -28,6 +28,7 @@ namespace AlfaCommerce.Controllers
         {
             var colors = await _context.Colors
                 .AsNoTracking()
+                .OrderBy(c => c.Id)
                 .ToListAsync();
 
             return colors.Select(c => new ColorDto()
@@ -50,7 +51,7 @@ namespace AlfaCommerce.Controllers
                 Name = color.Name
             };
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Store(
             [Bind("name")] Color color)

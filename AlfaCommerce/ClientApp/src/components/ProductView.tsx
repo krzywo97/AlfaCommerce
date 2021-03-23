@@ -44,7 +44,7 @@ export default class ProductView extends React.PureComponent<Props, State> {
                         <div className='d-flex flex-row flex-nowrap overflow-scroll col-12 col-md-8 col-lg-8 my-2'>
                             {this.state.product.photos.map((p, i) => (
                                 <div className='col-5 mb-2 px-2' key={i}>
-                                    <a href={p.url} target='_blank'>
+                                    <a href={p.url} target='_blank' rel='noopener noreferrer'>
                                         <img key={p.url} src={p.url} alt='Zdjęcie produktu' className='scaled-image'/>
                                     </a>
                                 </div>

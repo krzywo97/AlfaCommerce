@@ -4,7 +4,6 @@ import {default as ProductsApi} from '../../../api/products'
 import {default as CategoriesApi} from '../../../api/categories'
 import {default as ColorsApi} from '../../../api/colors'
 import {Category, Color} from '../../../api/models'
-import './NewProductView.css'
 import {Route} from 'react-router'
 import {History} from 'history'
 

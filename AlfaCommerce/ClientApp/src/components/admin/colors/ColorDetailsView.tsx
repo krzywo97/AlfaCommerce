@@ -1,8 +1,11 @@
 ﻿import React from 'react'
-import {default as api} from '../../../api/colors'
-import {Color} from '../../../api/models'
+import {default as ColorsApi} from '../../../api/colors'
+import {default as ProductsApi} from '../../../api/products'
+import {Color, Product} from '../../../api/models'
 import {Route} from 'react-router'
 import {History} from 'history'
+import ProductTile from '../../widgets/ProductTile'
+import Pagination from '../../widgets/Pagination'
 
 type Props = {
     id: number
@@ -10,8 +13,13 @@ type Props = {
 
 type State = {
     color: Color
-    loading: boolean,
-    newName: string
+    loadingDetails: boolean,
+    newName: string,
+    products: Product[],
+    loadingProducts: boolean,
+    currentPage: number,
+    totalPages: number,
+    totalProducts: number
 }
 
 export default class ColorDetailsView extends React.PureComponent<Props, State> {
@@ -20,12 +28,18 @@ export default class ColorDetailsView extends React.PureComponent<Props, State> 
             id: 0,
             name: ''
         },
-        loading: true,
-        newName: ''
+        loadingDetails: true,
+        newName: '',
+        products: [],
+        loadingProducts: true,
+        currentPage: 1,
+        totalPages: 1,
+        totalProducts: 0
     }
 
     componentDidMount(): void {
         this.fetchDetails()
+        this.fetchProducts()
     }
 
     render() {
@@ -53,51 +67,109 @@ export default class ColorDetailsView extends React.PureComponent<Props, State> 
                             </div>
                         </div>
                         <div className='row'>
-                            <Route render={() => (
+                            <Route render={({history: History}) => (
                                 <div className='d-flex flex-row-reverse col-12 col-md-9 col-lg-8'>
-                                    <button className='btn btn-primary' onClick={this.saveChanges}>Zapisz</button>
+                                    <button className='btn btn-primary'
+                                            onClick={() => this.saveChanges(History)}>Zapisz
+                                    </button>
+                                    <button className='btn btn-outline-danger me-2'
+                                            disabled={this.state.totalProducts > 0}
+                                            onClick={() => this.deleteColor(History)}>Usuń kolor
+                                    </button>
                                 </div>)}/>
+                            {this.state.totalProducts > 0 ? (
+                                <p className='text-danger mt-2 mb-0'>Nie można usunąć koloru, ponieważ istnieją
+                                    przypisane do niego produkty</p>
+                            ) : ''}
                         </div>
+                    </div>
+                </div>
+                <div className='card mt-2'>
+                    <div className='card-body'>
+                        <h5 className='card-title'>Produkty w kolorze ({this.state.totalProducts})</h5>
+                        <div className='d-flex flex-row flex-wrap'>
+                            {this.state.products.map(p => (
+                                <ProductTile key={p.id} name={p.name} imageUrl={p.photos[0].url}
+                                             url={`/admin/products/${p.id}`}
+                                             className='col-6 col-md-4 col-md-3 col-xl-2 p-2'/>
+                            ))}
+                        </div>
+                        {this.state.totalProducts > 0 ? (
+                            <div className='col-12 d-flex justify-content-center mt-2'>
+                                <Pagination currentPage={this.state.currentPage} totalPages={this.state.totalPages}
+                                            onPageChanged={this.changePage}/>
+                            </div>
+                        ) : (
+                            <p className='alert alert-info mt-2'>Nie znaleziono produktów o danym kolorze</p>
+                        )}
                     </div>
                 </div>
             </div>
         )
     }
 
-    fetchDetails = (): void => {
-        api.details(this.props.id)
+    private fetchDetails = (): void => {
+        ColorsApi.details(this.props.id)
             .then(response => {
                 this.setState({
                     color: response.data,
-                    loading: false,
+                    loadingDetails: false,
                     newName: response.data.name
                 })
             }, () => {
                 this.setState({
-                    loading: false
+                    loadingDetails: false
                 })
             })
             .catch(() => {
                 this.setState({
-                    loading: false
+                    loadingDetails: false
                 })
             })
     }
 
-    handleNewNameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    private fetchProducts = (): void => {
+        ProductsApi.get({
+            color: this.props.id
+        }, this.state.currentPage, 36).then(response => {
+            this.setState({
+                products: response.data.products,
+                loadingProducts: false,
+                totalProducts: response.data.totalProducts,
+                totalPages: response.data.totalPages
+            })
+        })
+    }
+
+    private changePage = (page: number): void => {
+        this.setState({
+            currentPage: page
+        }, () => this.fetchProducts())
+    }
+
+    private handleNewNameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             newName: event.target.value
         })
     }
 
-    saveChanges = (): void => {
+    private saveChanges = (history: History): void => {
+        ColorsApi.edit({
+            ...this.state.color,
+            name: this.state.newName
+        }).then(() => {
+            history.push('/admin/colors')
+        }, () => {
 
+        }).catch(() => {
+
+        })
     }
 
-    deleteColor = (history: History): void => {
-        api.delete(this.state.color.id)
+    private deleteColor = (history: History): void => {
+        ColorsApi.delete(this.state.color.id)
             .then(() => {
-                history.push('/admin/categories')
+                history.push('/admin/colors')
             }, () => {
 
             }).catch(() => {

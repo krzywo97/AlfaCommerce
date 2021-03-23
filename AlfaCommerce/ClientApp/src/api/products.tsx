@@ -49,6 +49,9 @@ export default {
     add(product: NewProductRequest): Promise<AxiosResponse> {
         return api<any>('products', 'post', {}, product)
     },
+    edit(product: EditProductRequest): Promise<AxiosResponse> {
+        return api<any>('products', 'put', {}, product)
+    },
     delete(id: number): Promise<AxiosResponse> {
         return api<any>('products/' + id, 'delete', {}, {})
     }
