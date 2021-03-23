@@ -97,7 +97,7 @@ function Pagination(props: Props) {
                 {pages.map(p => (
                     <li key={p.key} className={`page-item ${p.enabled ? '' : ' disabled'}`}>
                         <button className='page-link' onClick={() => props.onPageChanged(p.number)}
-                                disabled={!p.enabled} dangerouslySetInnerHTML={{__html: p.label}}/>
+                                disabled={!p.enabled}>{p.label}</button>
                     </li>
                 ))}
             </ul>
